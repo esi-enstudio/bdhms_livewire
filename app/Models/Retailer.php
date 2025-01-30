@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static count()
  * @method static whereIn(string $string, array $selectedRecords)
  * @method static findOrFail($id)
+ * @method static truncate()
  * @property mixed $zm
  * @property mixed $manager
  * @property mixed $supervisor

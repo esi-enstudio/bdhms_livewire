@@ -8,11 +8,13 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Index extends Component
 {
@@ -21,7 +23,6 @@ class Index extends Component
 
     // Properties
     public string $search = '';
-    public string $status = '';
     public $enabled;
     public array $selectedRecords = [];
     public bool $selectAll = false;
@@ -73,8 +74,8 @@ class Index extends Component
 
         foreach ($records as $record) {
             // Delete document if it exists
-            if ($record->documents && Storage::disk('public')->exists($record->documents)) {
-                Storage::disk('public')->delete($record->documents);
+            if ($record->document && Storage::disk('public')->exists($record->document)) {
+                Storage::disk('public')->delete($record->document);
             }
 
             // Delete the record
@@ -104,6 +105,22 @@ class Index extends Component
         session()->flash('message', 'Record deleted successfully!');
     }
 
+    // Delete ALL
+    public function deleteAll(): void {
+
+        foreach (Retailer::all() as $retailer) {
+            // Delete document if it exists
+            if ($retailer->document && Storage::disk('public')->exists($retailer->document)) {
+                Storage::disk('public')->delete($retailer->document);
+            }
+        }
+
+        // Delete records
+        Retailer::truncate();
+
+        session()->flash('message', 'All retailers have been deleted successfully.');
+    }
+
     // Reset the selection
     public function resetSelection(): void
     {
@@ -111,25 +128,29 @@ class Index extends Component
         $this->selectAll = false;
     }
 
-
     public function exportExcel(): BinaryFileResponse
     {
         return Excel::download(new RetailersExport(), 'retailers.xlsx');
     }
 
+    public function download(Retailer $retailer): StreamedResponse {
+        // Ensure the file exists
+        if (!Storage::disk('public')->exists($retailer->document)) {
+            session()->flash('error', 'File not found.');
+        }
+
+        // Stream the file for download
+        return Storage::disk('public')->download($retailer->document);
+    }
+
+    #[Computed]
+    public function retailers()
+    {
+        return Retailer::query()->search($this->search)->latest()->paginate(5);
+    }
+
     public function render(): Factory|View|Application
     {
-        // Query with search, filter, and pagination
-        $retailers = Retailer::query()
-            ->search($this->search)
-            ->when($this->status, function ($query) {
-                $query->where('enabled', $this->status);
-            })
-            ->latest()
-            ->paginate(5);
-
-        return view('livewire.retailer.index', [
-            'retailers' => $retailers,
-        ])->title('Retailers');
+        return view('livewire.retailer.index', ['allRetailerCount' => Retailer::count()])->title('Retailers');
     }
 }

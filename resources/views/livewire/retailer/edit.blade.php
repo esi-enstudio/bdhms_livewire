@@ -12,26 +12,42 @@
         submitMethod="update"
     >
 
-        <x-form.section title="Assign House and User">
-            <x-form.label>House</x-form.label>
-            <x-form.select-input-sm wire:model.live="form.house_id" error="form.house_id">
-                <option selected="" value="">Select House</option>
-                @forelse($this->houses as $house)
-                    <option value="{{ $house->id }}">{{ $house->code.'-'.$house->name }}</option>
-                @empty
-                    <option>No data found</option>
-                @endforelse
-            </x-form.select-input-sm>
+        <x-text-button wire:click="toggleHouseAndUser">
+            {{ $modifyHouseAndUser ? 'Back' : 'Change' }}
+        </x-text-button>
 
-            <x-form.label>User</x-form.label>
-            <x-form.select-input-sm wire:model.blur="form.user_id" error="form.user_id">
-                <option selected="" value="">Select User</option>
-                @forelse($this->users as $user)
-                    <option value="{{ $user->id }}">{{ $user->phone.'-'.$user->name }}</option>
-                @empty
-                    <option>No data found</option>
-                @endforelse
-            </x-form.select-input-sm>
+        <x-form.section title="Assign House and User">
+            @if(!$modifyHouseAndUser)
+                <x-form.label>House</x-form.label>
+                <x-form.select-input-sm wire:model.live="form.house_id" error="form.house_id" disabled>
+                    <option value="{{ $retailer->house->id }}">{{ $retailer->house->code.' - '.$retailer->house->name }}</option>
+                </x-form.select-input-sm>
+
+                <x-form.label>User</x-form.label>
+                <x-form.select-input-sm wire:model.blur="form.user_id" error="form.user_id" disabled>
+                    <option value="{{ $retailer->user->id ?? null }}">{{ $retailer->user->phone ?? null.' - '.optional($retailer->user)->name }} </option>
+                </x-form.select-input-sm>
+            @else
+                <x-form.label>House</x-form.label>
+                <x-form.select-input-sm wire:model.live="form.house_id" error="form.house_id">
+                    <option selected="" value="">Select House</option>
+                    @forelse($this->houses as $house)
+                        <option value="{{ $house->id }}">{{ $house->code.'-'.$house->name }}</option>
+                    @empty
+                        <option>No data found</option>
+                    @endforelse
+                </x-form.select-input-sm>
+
+                <x-form.label>User</x-form.label>
+                <x-form.select-input-sm wire:model.blur="form.user_id" error="form.user_id">
+                    <option selected="" value="">Select User</option>
+                    @forelse($this->users as $user)
+                        <option value="{{ $user->id }}">{{ $user->phone.'-'.$user->name }} </option>
+                    @empty
+                        <option>No data found</option>
+                    @endforelse
+                </x-form.select-input-sm>
+            @endif
         </x-form.section>
 
         <x-form.section title="Retailer Information">

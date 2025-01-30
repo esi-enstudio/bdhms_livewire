@@ -22,7 +22,7 @@ class Show extends Component
 
     public function mount(Retailer $retailer): void
     {
-        $this->retailerName = $retailer->user->name;
+        $this->retailerName = $retailer->user->name ?? '';
         $this->form->id = $retailer->id;
         $this->document = $retailer->document;
         $this->form->fill( collect($retailer->toArray())->except('document')->toArray() );

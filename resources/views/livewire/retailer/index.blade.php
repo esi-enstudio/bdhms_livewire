@@ -18,7 +18,7 @@
         subtitle="List of all retailers"
         primary-btn-text="Add New"
         :primary-btn-link="route('retailer.create')"
-        :pagination="$retailers"
+        :pagination="$this->retailers"
     >
         <x-slot:thead>
             <tr>
@@ -34,7 +34,7 @@
         </x-slot:thead>
 
         <x-slot:tbody>
-            @forelse($retailers as $key => $retailer)
+            @forelse($this->retailers as $key => $retailer)
                 <tr wire:key="{{ $key }}">
                     <x-table.td
                         wire:model.live="selectedRecords"
@@ -90,7 +90,7 @@
     <!-- End Table Section -->
 
     <!-- Import/Export -->
-    <div class="flex items-center justify-between max-w-[85rem] px-4 py-2 sm:px-6 lg:px-8 mx-auto">
+    <div class="flex items-center justify-between max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
         <!-- Import -->
         <p>
             <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300" href="{{ route('retailer.import') }}" wire:navigate>
@@ -102,6 +102,7 @@
         </p>
 
         <!-- Export -->
+        @if($allRetailerCount > 0)
         <p class="flex items-center justify-between">
             <button wire:click="exportExcel" type="button" class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -117,13 +118,16 @@
                 Export CSV
             </button>
         </p>
+        @endif
     </div>
     <!-- End Import/Export -->
 
     <!-- Delete All Records -->
+    @if($allRetailerCount > 0)
     <div class="flex items-center justify-between max-w-[85rem] px-4 py-2 sm:px-6 lg:px-8 mx-auto">
-        <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ \App\Models\Retailer::count() }})</x-text-button>
+        <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ $allRetailerCount }})</x-text-button>
     </div>
+    @endif
     <!-- End Delete All Records -->
 
 </div>

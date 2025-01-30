@@ -61,13 +61,13 @@ class Create extends Component
     public function render(): Factory|View|Application
     {
         $availableUsers = Retailer::whereNotNull('user_id')->pluck('user_id');
-        $houseId = $this->form->house_id;
 
         return view('livewire.retailer.create', [
             'houses' => House::where('status', 'active')->get(),
             'users' => User::where([['status', 'active'],['role', 'retailer']])
-                ->whereNotIn('id', $availableUsers)
-                ->whereHas('houses', fn($query) => $query->where('houses.id', $houseId))->get(),
+                    ->whereNotIn('id', $availableUsers)
+                    ->whereHas('houses', fn($query) => $query->where('houses.id', $this->form->house_id))
+                    ->get(),
         ])->title('Add New');
     }
 }

@@ -3,7 +3,7 @@
 <div class="px-6 py-1.5 flex justify-end">
     <div class="group inline-flex items-center divide-x divide-gray-300 border border-gray-300 bg-white shadow-sm rounded-lg transition-all dark:divide-neutral-700 dark:bg-neutral-700 dark:border-neutral-700">
 
-        @if($additional->documents && Storage::disk('public')->exists($additional->documents))
+        @if($additional->document && Storage::disk('public')->exists($additional->document))
         <!-- Download Button -->
         <div class="hs-tooltip inline-block">
             <button wire:click="download({{ $additional->id }})" class="hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-s-md bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
@@ -23,7 +23,7 @@
             <button
                     id="hs-table-dropdown-1"
                     type="button"
-                    class="{{ $additional->documents && Storage::disk('public')->exists($additional->documents) ? 'rounded-e-md' : 'rounded-md' }} hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                    class="{{ $additional->document && Storage::disk('public')->exists($additional->document) ? 'rounded-e-md' : 'rounded-md' }} hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                     aria-haspopup="menu"
                     aria-expanded="false"
                     aria-label="Dropdown"

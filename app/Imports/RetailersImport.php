@@ -4,12 +4,13 @@ namespace App\Imports;
 
 use App\Models\House;
 use App\Models\Retailer;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-class RetailersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue
+class RetailersImport implements ToModel, WithHeadingRow, WithChunkReading
 {
     /**
      * @param array $row
@@ -18,12 +19,30 @@ class RetailersImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
      */
     public function model(array $row): Model|Retailer|null {
 
+//        dd();
+
         return new Retailer([
-            'house_id'      => House::firstWhere('code', $row['dd_code'])->id,
+            'house_id'      => House::firstWhere('code', $row['distributor_code'])->id,
             'code'          => $row['retailer_code'],
-            'name'          => $row['retailer_name'],
-            'itop_number'   => '0'.$row['itop_number'],
+            'name'          => Str::title($row['retailer_name']),
+            'type'          => $row['retailer_type'],
+            'enabled'       => $row['enabled'],
+            'service_point' => $row['service_point'],
+            'category'      => $row['category'],
+            'owner_name'    => Str::title($row['owner_name']),
+            'owner_number'  => '0'.$row['contact_no'],
+            'itop_number'   => '0'.$row['itopup_number'],
+            'dob'           => Carbon::parse($row['dob'])->format('Y-m-d'),
+            'nid'           => $row['nid'],
+            'division'      => Str::title($row['division']),
+            'district'      => Str::title($row['district']),
+            'thana'         => Str::title($row['thana']),
             'address'       => $row['address'],
+            'lat'           => $row['latitude'],
+            'long'          => $row['longitude'],
+            'sso'           => $row['sim_seller'],
+            'description'   => $row['description'],
+            'remarks'       => $row['remarks'],
         ]);
     }
 

@@ -23,6 +23,7 @@ class Edit extends Component
     public RetailerForm $form;
     public $retailer;
     public $document;
+    public bool $modifyHouseAndUser = false;
 
     public function mount(Retailer $retailer): void
     {
@@ -30,6 +31,10 @@ class Edit extends Component
         $this->document = $retailer->document;
         $this->form->retailer = $retailer;
         $this->form->fill( collect($retailer->toArray())->except('document')->toArray() );
+    }
+
+    public function toggleHouseAndUser(): void {
+       $this->modifyHouseAndUser = !$this->modifyHouseAndUser;
     }
 
     /**
@@ -53,10 +58,12 @@ class Edit extends Component
     #[Computed]
     public function users()
     {
+        $userId = Retailer::whereNotNull('user_id')->pluck('user_id');
         return User::where('status', 'active')
-            ->where('role', 'retailer')
-            ->whereHas('houses', fn($query) => $query->where('houses.id', $this->form->house_id))
-            ->get();
+                ->where('role', 'retailer')
+                ->whereNotIn('id', $userId)
+                ->whereHas('houses', fn($query) => $query->where('houses.id', $this->form->house_id))
+                ->get();
     }
 
     /**
