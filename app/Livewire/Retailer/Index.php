@@ -92,8 +92,8 @@ class Index extends Component
     public function destroy(Retailer $retailer): void
     {
         // Delete the document if it exists
-        if ($retailer->documents && Storage::disk('public')->exists($retailer->documents)) {
-            Storage::disk('public')->delete($retailer->documents);
+        if ($retailer->document && Storage::disk('public')->exists($retailer->document)) {
+            Storage::disk('public')->delete($retailer->document);
         }
 
         // Add authorization

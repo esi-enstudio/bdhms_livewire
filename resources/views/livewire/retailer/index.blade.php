@@ -120,4 +120,10 @@
     </div>
     <!-- End Import/Export -->
 
+    <!-- Delete All Records -->
+    <div class="flex items-center justify-between max-w-[85rem] px-4 py-2 sm:px-6 lg:px-8 mx-auto">
+        <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ \App\Models\Retailer::count() }})</x-text-button>
+    </div>
+    <!-- End Delete All Records -->
+
 </div>
