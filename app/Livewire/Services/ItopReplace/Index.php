@@ -2,12 +2,39 @@
 
 namespace App\Livewire\Services\ItopReplace;
 
+use App\Models\ItopReplace;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
-    public function render()
+    // Pagination Traits
+    use WithPagination, WithoutUrlPagination;
+
+    // Properties
+    public string $search = '';
+    public bool $selectAll = false;
+
+    // Reset pagination when search or filters change
+    public function updatedSearch(): void
     {
-        return view('livewire.services.itop-replace.index');
+        $this->resetPage();
+    }
+
+    #[Computed]
+    public function replaces()
+    {
+        return ItopReplace::query()->search($this->search)->latest()->paginate(5);
+    }
+
+
+    public function render(): Factory|View|Application
+    {
+        return view('livewire.services.itop-replace.index')->title('Itop Replace');
     }
 }

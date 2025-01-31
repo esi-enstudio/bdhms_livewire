@@ -33,11 +33,6 @@ class Index extends Component
         $this->resetPage();
     }
 
-    public function updatedStatus(): void
-    {
-        $this->resetPage();
-    }
-
     // Automatically toggle the select all checkbox based on individual selections
     public function updatedSelectedRecords(): void
     {

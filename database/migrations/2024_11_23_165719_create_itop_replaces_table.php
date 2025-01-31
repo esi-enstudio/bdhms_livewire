@@ -17,15 +17,9 @@ return new class extends Migration
     {
         Schema::create('itop_replaces', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(House::class);
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(User::class, 'zm');
-            $table->foreignIdFor(User::class, 'manager');
-            $table->foreignIdFor(User::class, 'supervisor');
-            $table->foreignIdFor(Rso::class);
             $table->foreignIdFor(Retailer::class);
-            $table->string('number');
-            $table->string('sim_serial');
+            $table->string('sim_serial')->unique();
             $table->string('balance');
             $table->string('reason');
             $table->string('status')->default('pending');

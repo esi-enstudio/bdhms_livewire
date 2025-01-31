@@ -36,8 +36,8 @@ class Sidebar extends Component
         ['label' => 'Services', 'icon' => '', 'children' => [
             // Itop Replace
             ['label' => 'Itop Replace', 'children' => [
-                //            ['label' => 'All Replace', 'route' => 'itopReplace.index'],
-                //            ['label' => 'Add New', 'route' => 'itopReplace.create'],
+                ['label' => 'All Replace', 'route' => 'itopReplace.index'],
+                ['label' => 'Add New', 'route' => 'itopReplace.create'],
             ]],
             // Commissions
             ['label' => 'Commissions', 'children' => [

@@ -33,13 +33,16 @@ class ItopReplace extends Model
     use HasFactory, Searchable;
 
     protected $guarded = [];
-    protected $with = ['ddHouse','user','rso','retailer'];
+    protected $with = ['user','retailer'];
 
     protected array $searchable = [
-        'number',
         'sim_serial',
         'remarks',
+        'description',
         'user.name',
+        'user.phone',
+        'retailer.itop_number',
+        'retailer.code',
     ];
 
     public function user(): BelongsTo
@@ -47,29 +50,9 @@ class ItopReplace extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function ddHouse(): BelongsTo
+    public function house(): BelongsTo
     {
-        return $this->belongsTo(DdHouse::class);
-    }
-
-    public function zm(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'zm');
-    }
-
-    public function manager(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'manager');
-    }
-
-    public function supervisor(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'supervisor');
-    }
-
-    public function rso(): BelongsTo
-    {
-        return $this->belongsTo(Rso::class);
+        return $this->belongsTo(House::class);
     }
 
     public function retailer(): BelongsTo

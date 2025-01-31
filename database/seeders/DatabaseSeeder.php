@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\House;
+use App\Models\ItopReplace;
 use App\Models\Product;
 use App\Models\Retailer;
 use App\Models\Rso;
@@ -32,7 +33,6 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
         ]);
 
-
         User::factory()->create([
             'name' => 'Emil Sadekin Islam',
             'email' => 'nilemil007@gmail.com',
@@ -41,5 +41,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'active',
             'password' => Hash::make('32133213'),
         ]);
+
+        ItopReplace::factory(10000)->create();
     }
 }
