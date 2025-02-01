@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\House;
 use App\Models\Retailer;
+use App\Models\Rso;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -19,10 +20,9 @@ class RetailersImport implements ToModel, WithHeadingRow, WithChunkReading
      */
     public function model(array $row): Model|Retailer|null {
 
-//        dd();
-
         return new Retailer([
             'house_id'      => House::firstWhere('code', $row['distributor_code'])->id,
+            'rso_id'        => Rso::firstWhere('itop_number', '0'.$row['rso_number'])->id,
             'code'          => $row['retailer_code'],
             'name'          => Str::title($row['retailer_name']),
             'type'          => $row['retailer_type'],

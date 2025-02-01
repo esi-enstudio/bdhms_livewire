@@ -25,7 +25,7 @@
                 <x-table.th>Request By</x-table.th>
                 <x-table.th>Retailer</x-table.th>
                 <x-table.th>Serial Number</x-table.th>
-                <x-table.th>Balance</x-table.th>
+                <x-table.th>Had Balance</x-table.th>
                 <x-table.th>Status</x-table.th>
                 <x-table.th></x-table.th>
             </tr>

@@ -9,6 +9,8 @@ document.addEventListener('livewire:navigated', () => {
     window.HSStaticMethods.autoInit();
 });
 
+
+
 // Select, Deselect all rso
 document.addEventListener('DOMContentLoaded', function () {
     // Find all buttons with IDs starting with "button-"

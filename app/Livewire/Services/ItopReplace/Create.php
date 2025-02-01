@@ -5,9 +5,11 @@ namespace App\Livewire\Services\ItopReplace;
 use App\Livewire\Forms\ItopReplaceForm;
 use App\Models\House;
 use App\Models\Retailer;
+use App\Models\Rso;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -16,6 +18,7 @@ class Create extends Component
 {
     public ItopReplaceForm $form;
     public $houseId;
+    public $itop_number;
 
     /**
      * @throws ValidationException
@@ -23,25 +26,34 @@ class Create extends Component
     public function updated( $fields): void {
         $this->validateOnly($fields);
 
-        if ($fields === 'houseId') {
-            $this->form->retailer_id = null;
-        }
     }
 
-    #[Computed]
-    public function houses(){
-        return House::where('status', 'active')->get();
+    /**
+     * @throws ValidationException
+     */
+    public function store(){
+        // Validating fields
+        $attr = $this->form->validate();
     }
 
-    #[Computed]
-    public function retailers(){
-        return Retailer::where('enabled', 'Y')
-            ->whereHas('house', fn($query) => $query->where('house_id', $this->houseId))
-            ->get();
-    }
+
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.services.itop-replace.create')->title('Add New');
+        $retailers = '';
+        switch (Auth::user()->role){
+            case 'admin':
+                $retailers = Retailer::where('enabled', 'Y')->get();
+                break;
+
+            case 'rso':
+                $rsoID = Rso::firstWhere('user_id', Auth::id())->id;
+                $retailers = Retailer::where([['enabled', 'Y'],['rso_id', $rsoID]])->get();
+                break;
+        }
+
+        return view('livewire.services.itop-replace.create', [
+            'retailers' => $retailers,
+        ])->title('Add New');
     }
 }

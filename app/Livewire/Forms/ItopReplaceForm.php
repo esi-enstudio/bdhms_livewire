@@ -11,7 +11,7 @@ use Livewire\Form;
 
     public $user_id;
     public $retailer_id;
-    public $serial_number;
+    public $sim_serial;
     public $balance;
     public $reason;
     public $status;
@@ -25,7 +25,7 @@ use Livewire\Form;
         return [
             'user_id' => ['required'],
             'retailer_id' => ['required'],
-            'serial_number' => ['required','numeric','digits:18','unique:itop_replaces,serial_number'.$this->id],
+            'sim_serial' => ['required','numeric','digits:18','unique:itop_replaces,sim_serial'.$this->id],
             'balance' => ['required','numeric'],
             'reason' => ['required','string','max:100'],
             'status' => ['required','string'],

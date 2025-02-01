@@ -25,7 +25,7 @@ use Livewire\Form;
     {
         return [
             'name'                  => ['required','max:150','min:3'],
-            'phone'                 => ['required', 'numeric', 'digits:11', 'starts_with:019,014', 'unique:users,phone,' . $this->userId],
+            'phone'                 => ['required', 'numeric', 'digits:11', 'unique:users,phone,' . $this->userId],
             'email'                 => ['required','lowercase','max:255','email','unique:users,email,' . $this->userId],
             'password'              => $this->userId ? ['nullable','min:8'] : ['required','min:8'],
             'password_confirmation' => $this->userId ? ['nullable','min:8','same:password'] : ['required','min:8','same:password'],
