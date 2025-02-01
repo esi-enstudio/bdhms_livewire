@@ -23,12 +23,14 @@ use Livewire\Form;
     public function rules(): array
     {
         return [
-            'user_id' => ['required'],
-            'retailer_id' => ['required'],
+            'user_id' => ['nullable'],
+            'retailer_id' => ['nullable'],
+
             'sim_serial' => ['required','numeric','digits:18','unique:itop_replaces,sim_serial'.$this->id],
             'balance' => ['required','numeric'],
             'reason' => ['required','string','max:100'],
-            'status' => ['required','string'],
+
+            'status' => ['nullable','string'],
             'remarks' => ['nullable','string','max:150'],
             'description' => ['nullable','string','max:255'],
             'completed_at' => ['nullable','date'],

@@ -27,6 +27,7 @@
                 <x-table.th>Serial Number</x-table.th>
                 <x-table.th>Had Balance</x-table.th>
                 <x-table.th>Status</x-table.th>
+                <x-table.th>Request At</x-table.th>
                 <x-table.th></x-table.th>
             </tr>
         </x-slot:thead>
@@ -50,6 +51,8 @@
                     />
 
                     <x-table.td
+                        :link="true"
+                        :link_url="route('retailer.show', $replace->retailer_id)"
                         :title="$replace->retailer->itop_number ?? 'N/A'"
                         :subtitle="$replace->retailer->code ?? 'N/A'"
                     />
@@ -66,6 +69,10 @@
                         :status="$replace->status"
                         :status_type="$replace->status == 'pending' || 'processing' ? 'warning' : 'success'"
                     />
+
+                    <x-table.td>
+                        {{ \Carbon\Carbon::parse($replace->requested_at)->diffForHumans() }}
+                    </x-table.td>
 
                     <x-table.td>
                         <x-table.action-btn

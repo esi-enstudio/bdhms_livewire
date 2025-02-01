@@ -43,7 +43,7 @@ class Create extends Component
         if ($this->form->documents) {
             // Store the new document
             $path = $this->form->documents->store('field-force/rso/documents', 'public');
-            $this->form->fill(['documents' => $path]);
+            $attr['documents'] = $path;
         }
 
         // Create new rso

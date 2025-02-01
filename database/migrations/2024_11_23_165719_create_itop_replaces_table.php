@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('sim_serial')->unique();
             $table->string('balance');
             $table->string('reason');
-            $table->string('status')->default('pending');
+            $table->enum('status', ['pending','processing','complete'])->default('pending');
             $table->string('remarks')->nullable();
             $table->string('description')->nullable();
             $table->timestamp('completed_at')->nullable();
