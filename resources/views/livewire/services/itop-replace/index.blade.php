@@ -1,8 +1,4 @@
 <div class="space-y-4">
-    <!-- Session message -->
-    <x-session/>
-    <!-- Session message end -->
-
     <!-- Page title -->
     <x-title title="Itop Replace" subtitle="List all replacement"/>
     <!-- Page title end -->
@@ -10,6 +6,10 @@
     <!-- Search box -->
     <x-searchbox wire:model.live.debounce.500ms="search" placeholder="Search in replace list..."/>
     <!-- Search box end -->
+
+    <!-- Session message -->
+    <x-session/>
+    <!-- Session message end -->
 
     <!-- Table Section -->
     <x-table
@@ -88,4 +88,12 @@
         </x-slot:tbody>
     </x-table>
     <!-- End Table Section -->
+
+    <!-- Delete All Records -->
+    @if($allReplaceCount > 0 && Auth::user()->role == 'admin')
+        <div class="flex items-center justify-between max-w-[85rem] mx-auto">
+            <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ $allReplaceCount }})</x-text-button>
+        </div>
+    @endif
+    <!-- End Delete All Records -->
 </div>

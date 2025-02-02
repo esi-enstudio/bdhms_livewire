@@ -23,6 +23,17 @@ class Show extends Component
         $this->replace = $replace;
     }
 
+    public function destroy(ItopReplace $replace): null
+    {
+        $replace->delete();
+
+        // Session flash message
+        session()->flash('message','Record deleted successfully!');
+
+        // Redirect to rso list
+        return $this->redirectRoute('itopReplace.index', navigate: true);
+    }
+
     public function render(): Factory|View|Application {
         return view('livewire.services.itop-replace.show', [
             'histories' => ItopReplace::query()

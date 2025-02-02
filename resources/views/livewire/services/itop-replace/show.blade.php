@@ -7,9 +7,9 @@
     <x-searchbox wire:model.live.debounce.500ms="search" placeholder="Search with serial number..."/>
     <!-- Search box end -->
 
-    <div class="dark:bg-blue-400">
-        <p>Balance: {{ $replace->balance }}</p>
-    </div>
+    <!-- Session message -->
+    <x-session/>
+    <!-- Session message end -->
 
     <!-- Table Section -->
     <x-table
@@ -24,8 +24,14 @@
                 <x-table.th>Retailer</x-table.th>
                 <x-table.th>Serial Number</x-table.th>
                 <x-table.th>Had Balance</x-table.th>
+                <x-table.th>Reason</x-table.th>
                 <x-table.th>Status</x-table.th>
-                <x-table.th>Request At</x-table.th>
+                <x-table.th>Remarks</x-table.th>
+                <x-table.th>Description</x-table.th>
+                <x-table.th>Request</x-table.th>
+                <x-table.th>Completed</x-table.th>
+                <x-table.th>Updated</x-table.th>
+                <x-table.th>Created</x-table.th>
                 <x-table.th></x-table.th>
             </tr>
         </x-slot:thead>
@@ -38,7 +44,6 @@
                             :checkbox="true"
                             :value="$replace->id"
                     />
-
                     <x-table.td
                             :title="$replace->user->name ?? 'N/A'"
                             :subtitle="$replace->user->phone ?? 'N/A'"
@@ -47,35 +52,37 @@
                             :link="true"
                             :link_url="route('user.show', $replace->user->id ?? 0)"
                     />
-
                     <x-table.td
                             :link="true"
                             :link_url="route('retailer.show', $replace->retailer_id)"
                             :title="$replace->retailer->itop_number ?? 'N/A'"
                             :subtitle="$replace->retailer->code ?? 'N/A'"
                     />
-
-                    <x-table.td
-                            :subtitle="$replace->sim_serial ?? 'N/A'"
-                    />
-
-                    <x-table.td
-                            :subtitle="$replace->balance ?? 'N/A'"
-                    />
-
+                    <x-table.td :subtitle="$replace->sim_serial ?? 'N/A'"/>
+                    <x-table.td :subtitle="$replace->balance ?? 'N/A'"/>
+                    <x-table.td :subtitle="$replace->reason ?? 'N/A'"/>
                     <x-table.td
                             :status="$replace->status"
                             :status_type="$replace->status == 'pending' || 'processing' ? 'warning' : 'success'"
                     />
-
+                    <x-table.td :subtitle="$replace->remarks ?? 'N/A'"/>
+                    <x-table.td :subtitle="$replace->description ?? 'N/A'"/>
                     <x-table.td>
-                        {{ \Carbon\Carbon::parse($replace->requested_at)->diffForHumans() }}
+                        {{ $replace->requested_at ? \Carbon\Carbon::parse($replace->requested_at)->diffForHumans() : '' }}
+                    </x-table.td>
+                    <x-table.td>
+                        {{ $replace->completed_at ? \Carbon\Carbon::parse($replace->completed_at)->diffForHumans() : '' }}
+                    </x-table.td>
+                    <x-table.td>
+                        {{ $replace->updated_at ? \Carbon\Carbon::parse($replace->updated_at)->diffForHumans() : '' }}
+                    </x-table.td>
+                    <x-table.td>
+                        {{ $replace->created_at ? \Carbon\Carbon::parse($replace->created_at)->diffForHumans() : '' }}
                     </x-table.td>
 
                     <x-table.td>
                         <x-table.action-btn
                                 :edit="route('itopReplace.edit', $replace->id)"
-                                :show="route('itopReplace.show', $replace->id)"
                                 :delete="$replace->id"
                         />
                     </x-table.td>
@@ -87,26 +94,14 @@
     </x-table>
     <!-- End Table Section -->
 
-{{--    <x-form--}}
-{{--            :name="$replaceNumber"--}}
-{{--            heading="Replace Details"--}}
-{{--            subheading="Review and update the specific details of the itop replace as needed."--}}
-{{--            :cancelBtnUrl="route('itopReplace.index')"--}}
-{{--            cancelBtnText="Cancel"--}}
-{{--            :action=" (object) [--}}
-{{--                'btnType' => 'link',--}}
-{{--                'url' => route('itopReplace.edit', $id), // required if button type is 'link'--}}
-{{--                'btnText' => 'Edit',--}}
-{{--            ]"--}}
-{{--    >--}}
-{{--        <x-form.section>--}}
-{{--            <p class="sm:col-span-9">Retailer: {{ $replaceNumber }}</p>--}}
-{{--            <p class="sm:col-span-9">Sim Serial: {{ $simSerial }}</p>--}}
-{{--            <p class="sm:col-span-9">Balance: {{ $balance }}</p>--}}
-{{--            <p class="sm:col-span-9">Reason: {{ \Illuminate\Support\Str::title($reason) }}</p>--}}
-{{--            <p class="sm:col-span-9">Remarks: {{ $remarks }}</p>--}}
-{{--            <p class="sm:col-span-9">Description: {{ $description }}</p>--}}
-{{--            <p class="sm:col-span-9">Status: {{ \Illuminate\Support\Str::title($status) }}</p>--}}
-{{--        </x-form.section>--}}
-{{--    </x-form>--}}
+
+    <div class="grid sm:grid-cols-4 place-items-center max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 mt-5">
+        <p class="capitalize">balance: {{ $replace->balance }}</p>
+        <p class="capitalize">reason: {{ $replace->reason }}</p>
+        <p class="capitalize">status: {{ $replace->status }}</p>
+        <p class="capitalize">remarks: {{ $replace->remarks }}</p>
+        <p class="capitalize">description: {{ $replace->description }}</p>
+        <p class="capitalize">requested: {{ $replace->requested_at ? \Carbon\Carbon::parse($replace->requested_at)->diffForHumans() : '' }}</p>
+        <p class="capitalize">completed: {{ $replace->completed_at ? \Carbon\Carbon::parse($replace->completed_at)->diffForHumans() : '' }}</p>
+    </div>
 </div>

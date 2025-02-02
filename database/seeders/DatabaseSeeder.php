@@ -42,6 +42,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('32133213'),
         ]);
 
-        ItopReplace::factory(1000)->create();
+        ItopReplace::factory(10)->create();
     }
 }

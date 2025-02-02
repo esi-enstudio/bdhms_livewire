@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static create(array $attributes)
  * @method static firstWhere( string $string, mixed $dd_house_id )
  * @method static where(string $string, mixed $retailer_id)
+ * @method static select( string $string )
+ * @method static truncate()
+ * @method static count()
  * @property mixed $dd_house_id
  * @property mixed $manager
  * @property mixed $rso_id
