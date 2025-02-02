@@ -45,8 +45,8 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::prefix('itop-replace')->name('itopReplace.')->group(function (){
         Route::get('/all', \App\Livewire\Services\ItopReplace\Index::class)->name('index');
         Route::get('/create', \App\Livewire\Services\ItopReplace\Create::class)->name('create');
-        Route::get('/{replace}edit', \App\Livewire\Services\ItopReplace\Edit::class)->name('edit');
-        Route::get('/{replace}details', \App\Livewire\Services\ItopReplace\Show::class)->name('show');
+        Route::get('/{replace}/edit', \App\Livewire\Services\ItopReplace\Edit::class)->name('edit');
+        Route::get('/{replace}/details', \App\Livewire\Services\ItopReplace\Show::class)->name('show');
     });
 });
 

@@ -37,7 +37,7 @@
                         <option
                             value="{{ $retailer->id }}"
                             data-hs-select-option='{
-    "icon": "<img class=\"inline-block size-4 rounded-full\" src=\"{{ Storage::url($retailer->user->avatar) }}\" alt=\"Afghanistan\" />"}'>
+    "icon": "<img class=\"inline-block size-4 rounded-full\" src=\"{{ optional($retailer->user)->avatar ? Storage::url(optional($retailer->user)->avatar) : 'https://preline.co/assets/img/160x160/img1.jpg' }}\" alt=\"Afghanistan\" />"}'>
                             {{ $retailer->itop_number }}
                         </option>
                         @endforeach

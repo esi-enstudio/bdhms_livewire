@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static search(mixed $search)
  * @method static create(array $attributes)
  * @method static firstWhere( string $string, mixed $dd_house_id )
+ * @method static where(string $string, mixed $retailer_id)
  * @property mixed $dd_house_id
  * @property mixed $manager
  * @property mixed $rso_id

@@ -77,7 +77,7 @@
                     <x-table.td>
                         <x-table.action-btn
                             :edit="route('itopReplace.edit', $replace->id)"
-                            :show="route('retailer.show', $replace->id)"
+                            :show="route('itopReplace.show', $replace->id)"
                             :delete="$replace->id"
                         />
                     </x-table.td>

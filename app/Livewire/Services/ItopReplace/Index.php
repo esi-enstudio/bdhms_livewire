@@ -18,7 +18,6 @@ class Index extends Component
 
     // Properties
     public string $search = '';
-    public bool $selectAll = false;
 
     // Reset pagination when search or filters change
     public function updatedSearch(): void
