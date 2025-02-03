@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Emil Sadekin Islam',
             'email' => 'nilemil007@gmail.com',
             'phone' => '01732547755',
-            'role' => 'admin',
             'status' => 'active',
             'password' => Hash::make('32133213'),
         ]);

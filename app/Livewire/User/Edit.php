@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Spatie\Permission\Models\Role;
 
 class Edit extends Component
 {
@@ -98,6 +99,7 @@ class Edit extends Component
         }
 
         // Update the user
+        dd($attr);
         $this->user->update($attr);
 
         // Sync selected houses
@@ -113,6 +115,6 @@ class Edit extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.user.edit')->title('Update User');
+        return view('livewire.user.edit', ['roles' => Role::all()])->title('Update User');
     }
 }

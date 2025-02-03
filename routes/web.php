@@ -48,6 +48,20 @@ Route::middleware(['auth','verified'])->group(function (){
         Route::get('/{replace}/edit', \App\Livewire\Services\ItopReplace\Edit::class)->name('edit');
         Route::get('/{replace}/details', \App\Livewire\Services\ItopReplace\Show::class)->name('show');
     });
+
+    // Role
+    Route::prefix('role')->name('role.')->group(function (){
+        Route::get('/all', App\Livewire\Authorization\Role\Index::class)->name('index');
+        Route::get('/create', \App\Livewire\Authorization\Role\Create::class)->name('create');
+        Route::get('/{role}/edit', \App\Livewire\Authorization\Role\Edit::class)->name('edit');
+    });
+
+    // Permission
+    Route::prefix('permission')->name('permission.')->group(function (){
+        Route::get('/all', App\Livewire\Authorization\Permission\Index::class)->name('index');
+        Route::get('/create', \App\Livewire\Authorization\Permission\Create::class)->name('create');
+        Route::get('/{permission}/edit', \App\Livewire\Authorization\Permission\Edit::class)->name('edit');
+    });
 });
 
 

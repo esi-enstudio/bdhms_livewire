@@ -45,7 +45,7 @@
             <div class="p-1.5 min-w-full inline-block align-middle">
                 <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
                     <!-- Table -->
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700 whitespace-nowrap">
                         <thead class="bg-gray-50 dark:bg-neutral-800">
                             {{ $thead }}
                         </thead>

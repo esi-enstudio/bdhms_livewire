@@ -58,6 +58,19 @@ class Sidebar extends Component
 //            ['label' => 'Add New', 'route' => 'product.create'],
             ]],
         ]],
+        // Authorization
+        ['label' => 'Authorization', 'icon' => '', 'children' => [
+                // Role
+                ['label' => 'Role', 'children' => [
+                        ['label' => 'All Roles', 'route' => 'role.index'],
+                        ['label' => 'Add New', 'route' => 'role.create'],
+                ]],
+                // Permission
+                ['label' => 'Permission', 'children' => [
+                    ['label' => 'All Permissions', 'route' => 'permission.index'],
+                    ['label' => 'Add New', 'route' => 'permission.create'],
+                ]],
+            ]],
     ];
 
     public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application

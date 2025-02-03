@@ -3,6 +3,7 @@
 namespace App\Livewire\Services\ItopReplace;
 
 use App\Models\ItopReplace;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -26,8 +27,13 @@ class Index extends Component
         $this->resetPage();
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function destroy(ItopReplace $replace): void
     {
+        $this->authorize('delete', $replace);
+
         $replace->delete();
 
         // Session flash message
@@ -46,7 +52,11 @@ class Index extends Component
     #[Computed]
     public function replaces()
     {
-        return ItopReplace::query()->search($this->search)->where('user_id', Auth::id())->latest()->paginate(5);
+        if (Auth::user()->role == 'admin'){
+            return ItopReplace::query()->search($this->search)->latest()->paginate(5);
+        }else{
+            return ItopReplace::query()->search($this->search)->where('user_id', Auth::id())->latest()->paginate(5);
+        }
     }
 
 

@@ -28,6 +28,7 @@
                 <x-table.th>Had Balance</x-table.th>
                 <x-table.th>Status</x-table.th>
                 <x-table.th>Request At</x-table.th>
+                <x-table.th>Updated At</x-table.th>
                 <x-table.th></x-table.th>
             </tr>
         </x-slot:thead>
@@ -40,7 +41,6 @@
                         :checkbox="true"
                         :value="$replace->id"
                     />
-
                     <x-table.td
                         :title="$replace->user->name ?? 'N/A'"
                         :subtitle="$replace->user->phone ?? 'N/A'"
@@ -49,31 +49,26 @@
                         :link="true"
                         :link_url="route('user.show', $replace->user->id ?? 0)"
                     />
-
                     <x-table.td
                         :link="true"
                         :link_url="route('retailer.show', $replace->retailer_id)"
                         :title="$replace->retailer->itop_number ?? 'N/A'"
                         :subtitle="$replace->retailer->code ?? 'N/A'"
                     />
-
-                    <x-table.td
-                        :subtitle="$replace->sim_serial ?? 'N/A'"
-                    />
-
-                    <x-table.td
-                        :subtitle="$replace->balance ?? 'N/A'"
-                    />
-
+                    <x-table.td :subtitle="$replace->sim_serial ?? 'N/A'"/>
+                    <x-table.td :subtitle="$replace->balance ?? 'N/A'"/>
                     <x-table.td
                         :status="$replace->status"
                         :status_type="$replace->status == 'pending' || 'processing' ? 'warning' : 'success'"
                     />
-
-                    <x-table.td>
-                        {{ \Carbon\Carbon::parse($replace->requested_at)->diffForHumans() }}
-                    </x-table.td>
-
+                    <x-table.td
+                            :title="\Carbon\Carbon::parse($replace->requested_at)->diffForHumans()"
+                            :subtitle="\Carbon\Carbon::parse($replace->requested_at)->toDayDateTimeString()"
+                    />
+                    <x-table.td
+                            :title="\Carbon\Carbon::parse($replace->updated_at)->diffForHumans()"
+                            :subtitle="\Carbon\Carbon::parse($replace->updated_at)->toDayDateTimeString()"
+                    />
                     <x-table.td>
                         <x-table.action-btn
                             :edit="route('itopReplace.edit', $replace->id)"
@@ -91,7 +86,7 @@
 
     <!-- Delete All Records -->
     @if($allReplaceCount > 0 && Auth::user()->role == 'admin')
-        <div class="flex items-center justify-between max-w-[85rem] mx-auto">
+        <div class="flex items-center justify-between max-w-[85rem] mx-auto px-4">
             <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ $allReplaceCount }})</x-text-button>
         </div>
     @endif

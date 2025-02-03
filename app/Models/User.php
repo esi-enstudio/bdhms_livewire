@@ -3,7 +3,6 @@
 namespace App\Models;
 
  use App\Traits\Searchable;
- use Database\Factories\UserFactory;
  use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
  use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  use Illuminate\Database\Eloquent\Relations\HasOne;
  use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+ use Spatie\Permission\Traits\HasRoles;
 
  /**
  * @method static create(array $user)
@@ -48,7 +48,7 @@ use Illuminate\Notifications\Notifiable;
   */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, Searchable;
+    use HasFactory, Notifiable, Searchable, HasRoles;
 
 
     /**
