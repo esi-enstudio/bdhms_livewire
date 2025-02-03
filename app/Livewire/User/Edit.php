@@ -5,6 +5,7 @@ namespace App\Livewire\User;
 use App\Livewire\Forms\UserForm;
 use App\Models\House;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -21,6 +22,7 @@ class Edit extends Component
 
     public UserForm $form;
     public $user;
+    public array $role = [];
     public bool $isEdit = false;
     public string $avatarPreview = 'https://preline.co/assets/img/160x160/img1.jpg';
     public string $fileName = 'Upload Photo';
@@ -36,11 +38,10 @@ class Edit extends Component
         $this->form->userId = $user->id;
         $this->form->fill( collect($user->toArray())->except(['avatar','password','password_confirmation'])->toArray() );
         $this->form->fill(['houses' => $user->houses->pluck('id')->toArray()]);
-//        $this->editId = $user->id;
-        $this->created = \Carbon\Carbon::parse($user->created_at)->toFormattedDayDateString();
-        $this->updated = \Carbon\Carbon::parse($user->updated_at)->toFormattedDayDateString();
-        $this->createTimesAgo = \Carbon\Carbon::parse($user->created_at)->diffForHumans();
-        $this->updateTimesAgo = \Carbon\Carbon::parse($user->updated_at)->diffForHumans();
+        $this->created = Carbon::parse($user->created_at)->toFormattedDayDateString();
+        $this->updated = Carbon::parse($user->updated_at)->toFormattedDayDateString();
+        $this->createTimesAgo = Carbon::parse($user->created_at)->diffForHumans();
+        $this->updateTimesAgo = Carbon::parse($user->updated_at)->diffForHumans();
         $this->isEdit = true;
 
         // Get houses
@@ -99,8 +100,8 @@ class Edit extends Component
         }
 
         // Update the user
-        dd($attr);
         $this->user->update($attr);
+        $this->user->syncRoles($this->role);
 
         // Sync selected houses
         $this->user->houses()->sync($this->form->houses);

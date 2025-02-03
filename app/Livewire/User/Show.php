@@ -5,6 +5,7 @@ namespace App\Livewire\User;
 use App\Livewire\Forms\UserForm;
 use App\Models\House;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -20,6 +21,7 @@ class Show extends Component
     public string $username;
     public string $created;
     public string $updated;
+    public array $role = [];
     public string $createTimesAgo;
     public string $updateTimesAgo;
     public bool $isShow = false;
@@ -34,14 +36,17 @@ class Show extends Component
         $this->form->fill(['houses' => $user->houses->pluck('id')->toArray()]);
         $this->username = $user->name;
         $this->editId = $user->id;
-        $this->created = \Carbon\Carbon::parse($user->created_at)->toFormattedDayDateString();
-        $this->updated = \Carbon\Carbon::parse($user->updated_at)->toFormattedDayDateString();
-        $this->createTimesAgo = \Carbon\Carbon::parse($user->created_at)->diffForHumans();
-        $this->updateTimesAgo = \Carbon\Carbon::parse($user->updated_at)->diffForHumans();
+        $this->created = Carbon::parse($user->created_at)->toFormattedDayDateString();
+        $this->updated = Carbon::parse($user->updated_at)->toFormattedDayDateString();
+        $this->createTimesAgo = Carbon::parse($user->created_at)->diffForHumans();
+        $this->updateTimesAgo = Carbon::parse($user->updated_at)->diffForHumans();
         $this->isShow = true;
 
         // Get houses
         $this->houses = House::query()->where('status', 'active')->get();
+
+        // Get roles
+        $this->role = $user->roles->pluck('id')->toArray();
 
         // Set the avatar preview to the existing image
         $this->avatarPreview = $user->avatar ? Storage::url($user->avatar) : $this->avatarPreview;

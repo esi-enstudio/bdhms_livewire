@@ -13,7 +13,6 @@ use Livewire\Form;
     public $name;
     public $phone;
     public $email;
-    public $role;
     public $status = 'inactive';
     public $password;
     public $password_confirmation;
@@ -29,7 +28,6 @@ use Livewire\Form;
             'email'                 => ['required','lowercase','max:255','email','unique:users,email,' . $this->userId],
             'password'              => $this->userId ? ['nullable','min:8'] : ['required','min:8'],
             'password_confirmation' => $this->userId ? ['nullable','min:8','same:password'] : ['required','min:8','same:password'],
-            'role'                  => ['required'],
             'remarks'               => ['nullable'],
             'avatar'                => ['nullable','image','max:1024'],
             'status'                => ['nullable','in:active,inactive'],

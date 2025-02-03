@@ -20,13 +20,13 @@
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                     <main class="mt-6">
                         <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                            <h1 class="[text-shadow:_0_2px_4px_rgb(99_300_241_/_0.8)] text-neutral-700 md:text-6xl leading-snug font-manrope font-extrabold">BDHMS</h1>
+                            <h1 class="[text-shadow:_0_2px_4px_rgb(99_300_241_/_0.8)] text-neutral-700 dark:text-neutral-300 md:text-6xl leading-snug font-manrope font-extrabold">BDHMS</h1>
                             @if (Route::has('login'))
                                 <nav class="-mx-3 flex flex-1 justify-end">
                                     @auth
                                         <a
-                                                href="{{ url('/dashboard') }}"
-                                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                            href="{{ url('/dashboard') }}"
+                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                         >
                                             Dashboard
                                         </a>

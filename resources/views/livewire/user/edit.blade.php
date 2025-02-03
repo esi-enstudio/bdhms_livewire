@@ -1,5 +1,4 @@
 <div>
-    <x-validation-errors/>
     <x-profile-management :edit="$isEdit">
         <x-slot:title>{{ $form->name ?? 'Name' }}</x-slot:title>
         <x-slot:subtitle>Manage your name, password and account settings.</x-slot:subtitle>
@@ -20,10 +19,10 @@
         <x-profile-management.text-inputs :inputs="$form->passwordFields"/>
 
         <x-profile-management.label caption="">Role</x-profile-management.label>
-        <div wire:ignore class="sm:col-span-9">
-            <div class="mb-4">
+        <div class="sm:col-span-9">
+            <div wire:ignore class="mb-4">
                 <!-- Select -->
-                <select wire:model.blur="form.role" id="multiple-with-conditional-counter-select-role" multiple="" {{ count($roles) < 1 ? 'disabled' : '' }} data-hs-select='{
+                <select wire:model.blur="role" id="multiple-with-conditional-counter-select-role" multiple="" {{ count($roles) < 1 ? 'disabled' : '' }} data-hs-select='{
                     "placeholder": "Select Role",
                     "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
                     "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600",
@@ -41,13 +40,14 @@
                   }' class="hidden">
                     <option value="">Select Role</option>
                     @forelse($roles as $role)
-                        <option>{{ Str::title($role->name) }}</option>
+                        <option value="{{ $role->name }}">{{ Str::title($role->name) }}</option>
                     @empty
                         <option>No roles found</option>
                     @endforelse
                 </select>
                 <!-- End Select -->
             </div>
+            <x-validation-error error="form.role"/>
 
             @if(count($roles) > 0)
                 <div class="flex flex-wrap gap-2">
