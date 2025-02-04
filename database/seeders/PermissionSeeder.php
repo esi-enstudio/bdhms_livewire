@@ -33,12 +33,14 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit rso', 'group_name' => 'rso', 'guard_name' => 'web'],
             ['name' => 'show rso', 'group_name' => 'rso', 'guard_name' => 'web'],
             ['name' => 'delete rso', 'group_name' => 'rso', 'guard_name' => 'web'],
+            ['name' => 'download document rso', 'group_name' => 'rso', 'guard_name' => 'web'],
 
             ['name' => 'view retailer', 'group_name' => 'retailer', 'guard_name' => 'web'],
             ['name' => 'create retailer', 'group_name' => 'retailer', 'guard_name' => 'web'],
             ['name' => 'edit retailer', 'group_name' => 'retailer', 'guard_name' => 'web'],
             ['name' => 'show retailer', 'group_name' => 'retailer', 'guard_name' => 'web'],
             ['name' => 'delete retailer', 'group_name' => 'retailer', 'guard_name' => 'web'],
+            ['name' => 'download document retailer', 'group_name' => 'retailer', 'guard_name' => 'web'],
 
             ['name' => 'view replace', 'group_name' => 'replace', 'guard_name' => 'web'],
             ['name' => 'create replace', 'group_name' => 'replace', 'guard_name' => 'web'],

@@ -41,7 +41,7 @@ class Index extends Component implements HasMiddleware
      */
     public function destroy(ItopReplace $replace): void
     {
-        $this->authorize('delete', $replace);
+        $this->authorize('delete replace');
 
         $replace->delete();
 
@@ -50,7 +50,13 @@ class Index extends Component implements HasMiddleware
     }
 
     // Delete ALL
+
+    /**
+     * @throws AuthorizationException
+     */
     public function deleteAll(): void {
+
+        $this->authorize('delete all replace');
 
         // Delete records
         ItopReplace::truncate();
@@ -61,7 +67,7 @@ class Index extends Component implements HasMiddleware
     #[Computed]
     public function replaces()
     {
-        if (Auth::user()->role == 'admin'){
+        if (Auth::user()->hasRole('super admin')){
             return ItopReplace::query()->search($this->search)->latest()->paginate(5);
         }else{
             return ItopReplace::query()->search($this->search)->where('user_id', Auth::id())->latest()->paginate(5);

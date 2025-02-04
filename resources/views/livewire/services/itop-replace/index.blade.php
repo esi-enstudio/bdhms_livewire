@@ -62,8 +62,8 @@
                         :status_type="$replace->status == 'pending' || 'processing' ? 'warning' : 'success'"
                     />
                     <x-table.td
-                            :title="\Carbon\Carbon::parse($replace->requested_at)->diffForHumans()"
-                            :subtitle="\Carbon\Carbon::parse($replace->requested_at)->toDayDateTimeString()"
+                            :title="$replace->requested_at ? \Carbon\Carbon::parse($replace->requested_at)->diffForHumans() : ''"
+                            :subtitle="$replace->requested_at ? \Carbon\Carbon::parse($replace->requested_at)->toDayDateTimeString() : ''"
                     />
                     <x-table.td
                             :title="\Carbon\Carbon::parse($replace->updated_at)->diffForHumans()"

@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static findOrFail($id)
  * @property mixed $documents
  * @property mixed $user
+ * @property mixed $user_id
  */
 class Rso extends Model
 {

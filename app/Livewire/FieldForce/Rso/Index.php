@@ -4,9 +4,11 @@ namespace App\Livewire\FieldForce\Rso;
 
 use App\Models\House;
 use App\Models\Rso;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -21,16 +23,11 @@ class Index extends Component
 
     // Properties
     public  $search = '';
-    public  $houseId = '';
     public array $selectedRecords = [];
     public bool $selectAll = false;
 
     // Reset pagination when search or filters change
     public function updatedSearch(): void
-    {
-        $this->resetPage();
-    }
-    public function updatedStatus(): void
     {
         $this->resetPage();
     }
@@ -70,8 +67,16 @@ class Index extends Component
         $this->selectAll = '';
     }
 
-    // Delete record
-    public function destroy(Rso $rso): void {
+
+    /**
+     * @throws AuthorizationException
+     *
+     * Delete record
+     */
+    public function destroy( Rso $rso): void {
+
+        $this->authorize('delete rso');
+
         // Delete documents if it exists
         if ($rso->documents && Storage::disk('public')->exists($rso->documents)) {
             Storage::disk('public')->delete($rso->documents);
@@ -84,7 +89,13 @@ class Index extends Component
         session()->flash('message', 'Rso deleted successfully!');
     }
 
-    public function download(Rso $rso): StreamedResponse {
+    /**
+     * @throws AuthorizationException
+     */
+    public function download( Rso $rso): StreamedResponse {
+
+        $this->authorize('download rso document');
+
         $filePath = $rso->documents;
 
         if (!Storage::disk('public')->exists($filePath)) {
@@ -95,16 +106,17 @@ class Index extends Component
     }
 
     #[Computed]
-    public function houses()
-    {
-        return House::where('status', 'active')->get();
-    }
-
-    #[Computed]
     public function rsos()
     {
+        if (Auth::user()->hasRole('super admin'))
+        {
+            return Rso::search($this->search)
+                ->latest()
+                ->paginate(5);
+        }
+
         return Rso::search($this->search)
-            ->when($this->houseId, fn($query) => $query->where('house_id', $this->houseId))
+            ->where('user_id', Auth::id())
             ->latest()
             ->paginate(5);
     }
