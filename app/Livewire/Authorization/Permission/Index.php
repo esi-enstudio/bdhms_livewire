@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Authorization\Permission;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -35,7 +36,13 @@ class Index extends Component
     }
 
     // Delete ALL
+
+    /**
+     * @throws AuthorizationException
+     */
     public function deleteAll(): void {
+
+        $this->authorize('delete all permission');
 
         // Delete records
         Permission::truncate();

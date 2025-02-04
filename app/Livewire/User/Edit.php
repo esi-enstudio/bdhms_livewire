@@ -47,6 +47,9 @@ class Edit extends Component
         // Get houses
         $this->houses = House::query()->where('status', 'active')->get();
 
+        // Get roles
+        $this->role = $user->roles->pluck('name')->toArray();
+
         // Set the avatar preview to the existing image
         $this->avatarPreview = $user->avatar ? Storage::url($user->avatar) : $this->avatarPreview;
     }

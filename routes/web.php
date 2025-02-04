@@ -10,10 +10,10 @@ Route::middleware(['auth','verified'])->group(function (){
 
     // User
     Route::prefix('user')->name('user.')->group(function (){
-        Route::get('/all', \App\Livewire\User\Index::class)->name('index');
-        Route::get('/create', \App\Livewire\User\Create::class)->name('create');
-        Route::get('/{user}/edit', \App\Livewire\User\Edit::class)->name('edit');
-        Route::get('/{user}/details', \App\Livewire\User\Show::class)->name('show');
+        Route::get('/all', \App\Livewire\User\Index::class)->name('index')->middleware('permission:view user');
+        Route::get('/create', \App\Livewire\User\Create::class)->name('create')->middleware('permission:create user');
+        Route::get('/{user}/edit', \App\Livewire\User\Edit::class)->name('edit')->middleware('permission:edit user');
+        Route::get('/{user}/details', \App\Livewire\User\Show::class)->name('show')->middleware('permission:show user');
     });
 
     // House
@@ -43,10 +43,10 @@ Route::middleware(['auth','verified'])->group(function (){
 
     // Itop Replace
     Route::prefix('itop-replace')->name('itopReplace.')->group(function (){
-        Route::get('/all', \App\Livewire\Services\ItopReplace\Index::class)->name('index');
-        Route::get('/create', \App\Livewire\Services\ItopReplace\Create::class)->name('create');
-        Route::get('/{replace}/edit', \App\Livewire\Services\ItopReplace\Edit::class)->name('edit');
-        Route::get('/{replace}/details', \App\Livewire\Services\ItopReplace\Show::class)->name('show');
+        Route::get('/all', \App\Livewire\Services\ItopReplace\Index::class)->name('index')->middleware('permission:view replace');
+        Route::get('/create', \App\Livewire\Services\ItopReplace\Create::class)->name('create')->middleware('permission:create replace');
+        Route::get('/{replace}/edit', \App\Livewire\Services\ItopReplace\Edit::class)->name('edit')->middleware('permission:edit replace');
+        Route::get('/{replace}/details', \App\Livewire\Services\ItopReplace\Show::class)->name('show')->middleware('permission:show replace');
     });
 
     // Role

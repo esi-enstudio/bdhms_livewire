@@ -12,6 +12,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Spatie\Permission\Models\Role;
 
 class Show extends Component
 {
@@ -21,7 +22,7 @@ class Show extends Component
     public string $username;
     public string $created;
     public string $updated;
-    public array $role = [];
+    public array $roles = [];
     public string $createTimesAgo;
     public string $updateTimesAgo;
     public bool $isShow = false;
@@ -46,7 +47,7 @@ class Show extends Component
         $this->houses = House::query()->where('status', 'active')->get();
 
         // Get roles
-        $this->role = $user->roles->pluck('id')->toArray();
+        $this->roles = $user->roles->pluck('name')->toArray();
 
         // Set the avatar preview to the existing image
         $this->avatarPreview = $user->avatar ? Storage::url($user->avatar) : $this->avatarPreview;
@@ -63,6 +64,6 @@ class Show extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.user.show')->title('User Details');
+        return view('livewire.user.show', ['roles' => Role::all()])->title('User Details');
     }
 }

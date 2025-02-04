@@ -10,8 +10,6 @@
             ]"
         submitMethod="store"
     >
-{{--        <x-validation-errors/>--}}
-
         <x-form.section>
             <x-form.label>Retailer ({{ count($retailers) }})</x-form.label>
             <div class="sm:col-span-9">

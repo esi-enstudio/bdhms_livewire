@@ -15,6 +15,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::insert([
+            ['name' => 'Emil Sadekin Islam', 'phone' => '01732547755', 'email' => 'nilemil007@gmail.com', 'status' => 'active', 'password' => Hash::make('32133213'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
+
             ['name' => 'Zm', 'phone' => '01911000001', 'email' => 'zm@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
 
             ['name' => 'Mdo', 'phone' => '01911000002', 'email' => 'mdo@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],

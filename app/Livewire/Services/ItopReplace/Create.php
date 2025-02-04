@@ -18,7 +18,6 @@ use Livewire\Component;
 class Create extends Component
 {
     public ItopReplaceForm $form;
-    public $retailers = null;
 
     /**
      * @throws ValidationException
@@ -52,15 +51,18 @@ class Create extends Component
 
     public function render(): Factory|View|Application
     {
-        if ( Auth::user()->role == 'rso' ) {
+        $retailers = null;
+
+        if ( Auth::user()->hasRole('super admin') ) {
+            $retailers = Retailer::where('enabled', 'Y')->get();
+        }elseif (Auth::user()->hasRole('rso')){
             $rsoID = Rso::firstWhere( 'user_id', Auth::id() )->id;
-            $this->retailers = Retailer::where( [ [ 'enabled', 'Y' ], [ 'rso_id', $rsoID ] ] )->get();
-        }elseif (Auth::user()->role == 'admin'){
-            $this->retailers = Retailer::where('enabled', 'Y')->get();
+            $retailers = Retailer::where( [ [ 'enabled', 'Y' ], [ 'rso_id', $rsoID ] ] )->get();
+
         }
 
         return view('livewire.services.itop-replace.create', [
-            'retailers' => $this->retailers,
+            'retailers' => $retailers,
         ])->title('Add New');
     }
 }

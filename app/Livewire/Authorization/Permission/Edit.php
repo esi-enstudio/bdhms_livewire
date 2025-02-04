@@ -21,7 +21,7 @@ class Edit extends Component
 
     protected function rules(): array {
         return [
-                'name' => ['required','string','regex:/^[\pL\s]+$/u','max:50','unique:permissions'.$this->permission->id],
+                'name' => ['required','string','regex:/^[\pL\s]+$/u','max:50','unique:permissions,'.$this->permission->id],
         ];
     }
 

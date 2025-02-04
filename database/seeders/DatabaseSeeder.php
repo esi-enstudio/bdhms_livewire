@@ -31,15 +31,16 @@ class DatabaseSeeder extends Seeder
             RsoSeeder::class,
             RetailerSeeder::class,
             ProductSeeder::class,
+            PermissionSeeder::class,
         ]);
 
-        User::factory()->create([
-            'name' => 'Emil Sadekin Islam',
-            'email' => 'nilemil007@gmail.com',
-            'phone' => '01732547755',
-            'status' => 'active',
-            'password' => Hash::make('32133213'),
-        ]);
+//        User::factory()->create([
+//            'name' => 'Emil Sadekin Islam',
+//            'email' => 'nilemil007@gmail.com',
+//            'phone' => '01732547755',
+//            'status' => 'active',
+//            'password' => Hash::make('32133213'),
+//        ]);
 
         ItopReplace::factory(10)->create();
     }
