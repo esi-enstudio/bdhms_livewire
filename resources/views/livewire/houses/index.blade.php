@@ -12,47 +12,12 @@
     <x-session/>
     <!-- Session message end -->
 
-    <!-- Filter -->
-    <x-filter>
-        <!-- Status -->
-        <x-select-input-sm wire:model.live="status" label="Status" class="!rounded-full">
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-        </x-select-input-sm>
-        <!-- Status end -->
-
-        <!-- Action -->
-        <x-filter.action-btn>
-            <x-filter.button
-                    label="Delete"
-                    :data="$selectedRecords"
-                    wire:click="deleteSelected"
-                    wire:confirm="Are you sure to delete selected records?"
-            />
-
-            <x-filter.button
-                    label="Active"
-                    :data="$selectedRecords"
-                    wire:click="activateSelected"
-                    wire:confirm="Are you sure to active selected records?"
-            />
-
-            <x-filter.button
-                    label="Inactive"
-                    :data="$selectedRecords"
-                    wire:click="deactivateSelected"
-                    wire:confirm="Are you sure to inactive selected records?"
-            />
-        </x-filter.action-btn>
-        <!-- Action end -->
-    </x-filter>
-    <!-- Filter end -->
-
     <!-- Table Section -->
     <x-table
             title="Houses"
             subtitle="List of all houses"
             primary-btn-text="Add New"
+            create_permission="create house"
             :primary-btn-link="route('houses.create')"
             :pagination="$houses"
     >
@@ -78,7 +43,14 @@
                     <x-table.td :title="$house->address"/>
                     <x-table.td :status="$house->status" :status_type="$house->status == 'active' ? 'success' : 'danger'"/>
                     <x-table.td>
-                        <x-nav-link wire:navigate :href="route('houses.show', $house->id)">Detail's</x-nav-link>
+                        @can('show house')
+                            <x-nav-link
+                                    wire:navigate
+                                    :href="route('houses.show', $house->id)"
+                            >
+                                Detail's
+                            </x-nav-link>
+                        @endcan
                     </x-table.td>
                 </tr>
             @empty

@@ -16,6 +16,7 @@
         title="Itop Replace"
         subtitle="List of all replacement"
         primary-btn-text="Add New"
+        create-permission="create replace"
         :primary-btn-link="route('itopReplace.create')"
         :pagination="$this->replaces"
     >
@@ -71,9 +72,12 @@
                     />
                     <x-table.td>
                         <x-table.action-btn
-                            :edit="route('itopReplace.edit', $replace->id)"
-                            :show="route('itopReplace.show', $replace->id)"
-                            :delete="$replace->id"
+                                show-permission="show replace"
+                                edit-permission="edit replace"
+                                delete-permission="delete replace"
+                                :edit="route('itopReplace.edit', $replace->id)"
+                                :show="route('itopReplace.show', $replace->id)"
+                                :delete="$replace->id"
                         />
                     </x-table.td>
                 </tr>
@@ -85,10 +89,12 @@
     <!-- End Table Section -->
 
     <!-- Delete All Records -->
-    @if($allReplaceCount > 0 && Auth::user()->role == 'admin')
-        <div class="flex items-center justify-between max-w-[85rem] mx-auto px-4">
-            <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ $allReplaceCount }})</x-text-button>
-        </div>
-    @endif
+    @can('delete all replace')
+        @if($allReplaceCount > 0)
+            <div class="flex items-center justify-between max-w-[85rem] mx-auto px-4">
+                <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ $allReplaceCount }})</x-text-button>
+            </div>
+        @endif
+    @endcan
     <!-- End Delete All Records -->
 </div>

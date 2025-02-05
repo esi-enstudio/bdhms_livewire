@@ -6,6 +6,8 @@
         :cancelBtnUrl="route('retailer.index')"
         cancelBtnText="Cancel"
         :deleteId="$form->id"
+        deletePermission="delete retailer"
+        editPermission="edit retailer"
         :action=" (object) [
                 'btnType' => 'link',
                 'url' => route('retailer.edit', $form->id), // required if button type is 'link'

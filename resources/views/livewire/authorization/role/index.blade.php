@@ -14,6 +14,7 @@
     <!-- Table Section -->
     <x-table
             primary-btn-text="Add New"
+            create_permission="create role"
             :primary-btn-link="route('role.create')"
             :pagination="$this->roles"
     >
@@ -50,6 +51,8 @@
                     />
                     <x-table.td>
                         <x-table.action-btn
+                                edit-permission="edit role"
+                                delete-permission="delete role"
                                 :edit="route('role.edit', $role->id)"
                                 :delete="$role->id"
                         />

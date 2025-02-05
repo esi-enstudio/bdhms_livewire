@@ -4,9 +4,12 @@ namespace App\Livewire\Retailer;
 
 use App\Exports\RetailersExport;
 use App\Models\Retailer;
+use App\Models\Rso;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -23,9 +26,6 @@ class Index extends Component
 
     // Properties
     public string $search = '';
-    public $enabled;
-    public array $selectedRecords = [];
-    public bool $selectAll = false;
 
     // Reset pagination when search or filters change
     public function updatedSearch(): void
@@ -33,60 +33,15 @@ class Index extends Component
         $this->resetPage();
     }
 
-    // Automatically toggle the select all checkbox based on individual selections
-    public function updatedSelectedRecords(): void
-    {
-        $this->selectAll = count($this->selectedRecords) === Retailer::count();
-    }
 
-    // Select-Deselect all records
-    public function updatedSelectAll($value): void
-    {
-        $this->selectedRecords = $value ? Retailer::pluck('id')->toArray() : [] ;
-    }
-
-    // Bulk update status to active
-    public function activateSelected(): void
-    {
-        Retailer::whereIn('id', $this->selectedRecords)->update(['status' => 'active']);
-        $this->resetSelection();
-        session()->flash('message', 'Selected retailers are active successfully!');
-    }
-
-    // Bulk update status to inactive
-    public function deactivateSelected(): void
-    {
-        Retailer::whereIn('id', $this->selectedRecords)->update(['status' => 'inactive']);
-        $this->resetSelection();
-        session()->flash('message', 'Selected retailers are inactive successfully!');
-    }
-
-    // Delete multiple records
-    public function deleteSelected(): void
-    {
-        // Find users to delete
-        $records = Retailer::whereIn('id', $this->selectedRecords)->get();
-
-        foreach ($records as $record) {
-            // Delete document if it exists
-            if ($record->document && Storage::disk('public')->exists($record->document)) {
-                Storage::disk('public')->delete($record->document);
-            }
-
-            // Delete the record
-            $record->delete();
-        }
-
-        // Clear selection and show success message
-        $this->resetSelection();
-
-        // Session message
-        session()->flash('message', 'Selected records deleted successfully!');
-    }
-
-    // Delete single record
+    /**
+     * @throws AuthorizationException
+     * Delete single record
+     */
     public function destroy(Retailer $retailer): void
     {
+        $this->authorize('delete retailer');
+
         // Delete the document if it exists
         if ($retailer->document && Storage::disk('public')->exists($retailer->document)) {
             Storage::disk('public')->delete($retailer->document);
@@ -116,13 +71,6 @@ class Index extends Component
         session()->flash('message', 'All retailers have been deleted successfully.');
     }
 
-    // Reset the selection
-    public function resetSelection(): void
-    {
-        $this->selectedRecords = [];
-        $this->selectAll = false;
-    }
-
     public function exportExcel(): BinaryFileResponse
     {
         return Excel::download(new RetailersExport(), 'retailers.xlsx');
@@ -141,7 +89,12 @@ class Index extends Component
     #[Computed]
     public function retailers()
     {
-        return Retailer::query()->search($this->search)->latest()->paginate(5);
+        if (Auth::user()->hasRole('super admin')){
+            return Retailer::query()->search($this->search)->latest()->paginate(5);
+        }
+
+        $rsoId = Rso::firstWhere('user_id', Auth::id())->id;
+        return Retailer::query()->search($this->search)->where('rso_id', $rsoId)->latest()->paginate(5);
     }
 
     public function render(): Factory|View|Application

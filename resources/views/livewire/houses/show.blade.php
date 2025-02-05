@@ -4,13 +4,14 @@
             subheading="Review and update the specific details of the distribution house as needed."
             :cancelBtnUrl="route('houses.index')"
             cancelBtnText="Cancel"
+            :deleteId="$form->house->id"
+            editPermission="edit house"
+            deletePermission="delete house"
             :action=" (object) [
                 'btnType' => 'link',
-                'url' => route('houses.edit', $form->house->id), // required if button type is 'link'
+                'url' => route('houses.edit', $form->house->id),
                 'btnText' => 'Edit',
             ]"
-            :deleteId="$form->house->id"
-{{--            submitMethod="update"  --}}{{-- default form submit method is 'store' --}}
     >
         <x-form.section title="Identification and Location">
 

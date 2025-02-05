@@ -14,6 +14,7 @@
     <!-- Table Section -->
     <x-table
             primary-btn-text="Add New"
+            create_permission="create permission"
             :primary-btn-link="route('permission.create')"
             :pagination="$this->permissions"
     >
@@ -48,6 +49,8 @@
                     />
                     <x-table.td>
                         <x-table.action-btn
+                                edit-permission="edit permission"
+                                delete-permission="delete permission"
                                 :edit="route('permission.edit', $permission->id)"
                                 :delete="$permission->id"
                         />
@@ -61,10 +64,12 @@
     <!-- End Table Section -->
 
     <!-- Delete All Records -->
-    @if($allPermissionCount > 0 && Auth::user()->role == 'admin')
-        <div class="flex items-center justify-between max-w-[85rem] mx-auto px-4">
-            <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ $allPermissionCount }})</x-text-button>
-        </div>
-    @endif
+    @can('delete all permission')
+        @if($allPermissionCount > 0)
+            <div class="flex items-center justify-between max-w-[85rem] mx-auto px-4">
+                <x-text-button wire:click="deleteAll" wire:confirm="Are you sure to delete all records?" color="red">Delete ALL ({{ $allPermissionCount }})</x-text-button>
+            </div>
+        @endif
+    @endcan
     <!-- End Delete All Records -->
 </div>

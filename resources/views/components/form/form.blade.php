@@ -7,6 +7,8 @@
         'action' => [],
         'deleteId' => '',
         'name' => '',
+        'deletePermission' => '',
+        'editPermission' => '',
        ])
 
 <!-- Card Section -->
@@ -28,13 +30,16 @@
 
             {{ $slot }}
 
-
             <div class="mt-5 flex items-center justify-between">
 
                 @if($action->btnText == 'Edit')
-                    <button wire:confirm="Are you sure to delete this record?" wire:click="destroy({{ $deleteId }})" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
-                        Delete
-                    </button>
+                    @can($deletePermission)
+                        <button wire:confirm="Are you sure to delete this record?" wire:click="destroy({{ $deleteId }})" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
+                            Delete
+                        </button>
+                    @else
+                        <div></div>
+                    @endcan
                 @else
                     <div></div>
                 @endif
@@ -69,11 +74,15 @@
                             </button>
                         @break
 
+
                         @case('link')
+                            @can($editPermission)
                             <a wire:navigate href="{{ $action->url }}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                 {{ $action->btnText }}
                             </a>
+                            @endcan
                         @break
+
                     @endswitch
                     <!-- End Action Button -->
                 </div>

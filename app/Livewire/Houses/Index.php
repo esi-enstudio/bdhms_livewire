@@ -3,6 +3,7 @@
 namespace App\Livewire\Houses;
 
 use App\Models\House;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -15,17 +16,11 @@ class Index extends Component
     use WithPagination, WithoutUrlPagination;
 
     public string $search = '';
-    public string $status = '';
     public array $selectedRecords = [];
     public bool $selectAll = false;
 
     // Reset pagination when search or filters change
     public function updatedSearch(): void
-    {
-        $this->resetPage();
-    }
-
-    public function updatedStatus(): void
     {
         $this->resetPage();
     }
@@ -59,8 +54,14 @@ class Index extends Component
     }
 
     // Bulk delete
+
+    /**
+     * @throws AuthorizationException
+     */
     public function deleteSelected(): void
     {
+        $this->authorize('delete house');
+
         // Find users to delete
         $records = House::whereIn('id', $this->selectedRecords)->get();
 
@@ -86,9 +87,6 @@ class Index extends Component
         // Query with search, filter, and pagination
         $houses = House::query()
                 ->search($this->search)
-                ->when($this->status, function ($query) {
-                    $query->where('status', $this->status);
-                })
                 ->latest()
                 ->paginate(3);
 

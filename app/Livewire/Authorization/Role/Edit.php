@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Authorization\Role;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -41,7 +42,13 @@ class Edit extends Component
         $this->validateOnly($field);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function update(): null {
+
+        $this->authorize('edit role');
+
         $attr = $this->validate();
 
         $this->role->update($attr);

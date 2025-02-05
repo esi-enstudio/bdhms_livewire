@@ -3,6 +3,7 @@
 namespace App\Livewire\Services\ItopReplace;
 
 use App\Models\ItopReplace;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -23,8 +24,13 @@ class Show extends Component
         $this->replace = $replace;
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function destroy(ItopReplace $replace): null
     {
+        $this->authorize('delete replace');
+
         $replace->delete();
 
         // Session flash message

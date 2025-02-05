@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Authorization\Role;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -26,16 +27,26 @@ class Index extends Component
         $this->resetPage();
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function destroy(Role $role): void
     {
+        $this->authorize('delete role');
+
         $role->delete();
 
         // Session flash message
         session()->flash('message','Role deleted successfully!');
     }
 
-    // Delete ALL
+    /**
+     * @throws AuthorizationException
+     * Delete ALL
+     */
     public function deleteAll(): void {
+
+        $this->authorize('delete all role');
 
         // Delete records
         Role::truncate();

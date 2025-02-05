@@ -25,6 +25,7 @@ class ItopReplaceFactory extends Factory
             'reason' => fake()->text(10),
             'remarks' => fake()->text(10),
             'description' => fake()->realText(20),
+            'requested_at' => now(),
         ];
     }
 }

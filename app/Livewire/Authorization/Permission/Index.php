@@ -27,8 +27,13 @@ class Index extends Component
         $this->resetPage();
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function destroy(Permission $permission): void
     {
+        $this->authorize('delete permission');
+
         $permission->delete();
 
         // Session flash message

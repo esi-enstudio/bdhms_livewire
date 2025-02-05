@@ -4,6 +4,7 @@ namespace App\Livewire\Houses;
 
 use App\Livewire\Forms\HouseForm;
 use App\Models\House;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -23,8 +24,11 @@ class Edit extends Component
     /**
      * Update information
      * @throws ValidationException
+     * @throws AuthorizationException
      */
-    public function update(): null {
+    public function update() {
+
+        $this->authorize('edit house');
 
         // Validating fields
         $attr = $this->form->validate();

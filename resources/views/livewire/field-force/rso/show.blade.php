@@ -6,6 +6,8 @@
         :cancelBtnUrl="route('rso.index')"
         cancelBtnText="Cancel"
         :deleteId="$form->rsoId"
+        editPermission="edit rso"
+        deletePermission="delete rso"
         :action=" (object) [
                 'btnType' => 'link',
                 'url' => route('rso.edit', $form->rsoId), // required if button type is 'link'

@@ -70,9 +70,9 @@
                                 :show="route('rso.show', $rso->id)"
                                 :delete="$rso->id"
                                 :additional="$rso"
-                                show_permission="show rso"
-                                edit_permission="edit rso"
-                                delete_permission="delete rso"
+                                show-permission="show rso"
+                                edit-permission="edit rso"
+                                delete-permission="delete rso"
                             />
                         </x-table.td>
                     </tr>
