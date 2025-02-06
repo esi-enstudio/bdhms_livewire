@@ -50,13 +50,13 @@ class Sidebar extends Component
                 ]],
                 // Commissions
                 ['label' => 'Commissions', 'children' => [
-                    //            ['label' => 'All Commissions', 'route' => 'commission.index', 'permission' => 'view commission'],
-                    //            ['label' => 'Add New', 'route' => 'commission.create', 'permission' => 'create commission'],
+                    ['label' => 'All Commissions', 'route' => 'commission.index', 'permission' => 'view commission'],
+                    ['label' => 'Add New', 'route' => 'commission.create', 'permission' => 'create commission'],
                 ]],
                 // Lifting
                 ['label' => 'Lifting', 'children' => [
-                    //            ['label' => 'All Liftings', 'route' => 'lifting.index', 'permission' => 'view lifting'],
-                    //            ['label' => 'Add New', 'route' => 'lifting.create', 'permission' => 'create lifting'],
+                    ['label' => 'All Liftings', 'route' => 'lifting.index', 'permission' => 'view lifting'],
+                    ['label' => 'Add New', 'route' => 'lifting.create', 'permission' => 'create lifting'],
                 ]],
             ]],
 

@@ -6,12 +6,13 @@ use App\Models\House;
 use App\Models\Retailer;
 use App\Models\Rso;
 use Carbon\Carbon;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-class RetailersImport implements ToModel, WithHeadingRow, WithChunkReading
+class RetailersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue
 {
     /**
      * @param array $row
@@ -48,7 +49,7 @@ class RetailersImport implements ToModel, WithHeadingRow, WithChunkReading
 
     public function chunkSize(): int
     {
-        return 1000;
+        return 2000;
     }
 
     public function rules(): array

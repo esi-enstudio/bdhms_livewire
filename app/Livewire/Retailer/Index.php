@@ -33,7 +33,6 @@ class Index extends Component
         $this->resetPage();
     }
 
-
     /**
      * @throws AuthorizationException
      * Delete single record
@@ -55,8 +54,13 @@ class Index extends Component
         session()->flash('message', 'Record deleted successfully!');
     }
 
-    // Delete ALL
+    /**
+     * @throws AuthorizationException
+     * Delete ALL
+     */
     public function deleteAll(): void {
+
+        $this->authorize('delete all retailer');
 
         foreach (Retailer::all() as $retailer) {
             // Delete document if it exists
@@ -90,7 +94,7 @@ class Index extends Component
     public function retailers()
     {
         if (Auth::user()->hasRole('super admin')){
-            return Retailer::query()->search($this->search)->latest()->paginate(5);
+            return Retailer::query()->select('id','code','name','itop_number','enabled','sso','house_id')->search($this->search)->latest()->paginate(5);
         }
 
         $rsoId = Rso::firstWhere('user_id', Auth::id())->id;

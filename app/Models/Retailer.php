@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static whereIn(string $string, array $selectedRecords)
  * @method static findOrFail($id)
  * @method static truncate()
+ * @method static select(string $string, string $string1)
+ * @method static when($allRetailersSelected, \Closure $param, \Closure $param1)
  * @property mixed $zm
  * @property mixed $manager
  * @property mixed $supervisor
@@ -40,10 +42,6 @@ class Retailer extends Model
         'code',
         'itop_number',
         'name',
-        'user.name',
-        'user.phone',
-        'house.code',
-        'house.name',
     ];
 
     /**

@@ -5,7 +5,7 @@
     <!-- Page title end -->
 
     <!-- Search box -->
-    <x-searchbox wire:model.live.debounce.500ms="search" placeholder="Search in retailer"/>
+    <x-searchbox wire:model.live.debounce.500ms="search" placeholder="Search with 'Code', 'Itop Number' and 'Name'"/>
     <!-- Search box end -->
 
     <!-- Session message -->
@@ -24,7 +24,6 @@
         <x-slot:thead>
             <tr>
                 <x-table.th wire:model.live="selectAll" :checkbox="true"/>
-                <x-table.th>Name</x-table.th>
                 <x-table.th>House</x-table.th>
                 <x-table.th>Retailer Name</x-table.th>
                 <x-table.th>Itop Number</x-table.th>
@@ -38,18 +37,9 @@
             @forelse($this->retailers as $key => $retailer)
                 <tr wire:key="{{ $key }}">
                     <x-table.td
-                        wire:model.live="selectedRecords"
+                        wire:model.live="selected"
                         :checkbox="true"
                         :value="$retailer->id"
-                    />
-
-                    <x-table.td
-                        :title="$retailer->user->name ?? 'N/A'"
-                        :subtitle="$retailer->user->phone ?? 'N/A'"
-                        :avatar="optional($retailer->user)->avatar"
-                        :showAvatar="true"
-                        :link="true"
-                        :link_url="route('user.show', $retailer->user->id ?? 0)"
                     />
 
                     <x-table.td
@@ -59,7 +49,6 @@
 
                     <x-table.td
                         :title="$retailer->name ?? 'N/A'"
-                        :subtitle="$retailer->type ?? 'N/A'"
                     />
 
                     <x-table.td

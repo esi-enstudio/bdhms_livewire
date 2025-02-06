@@ -56,6 +56,22 @@ Route::middleware(['auth','verified'])->group(function (){
         Route::get('/{replace}/details', Show::class)->name('show')->middleware('permission:show replace');
     });
 
+    // Commission
+    Route::prefix('commission')->name('commission.')->group(function (){
+        Route::get('/all', \App\Livewire\Services\Commission\Index::class)->name('index')->middleware('permission:view commission');
+        Route::get('/create', \App\Livewire\Services\Commission\Create::class)->name('create')->middleware('permission:create commission');
+        Route::get('/{commission}/edit', \App\Livewire\Services\Commission\Edit::class)->name('edit')->middleware('permission:edit commission');
+        Route::get('/{commission}/details', \App\Livewire\Services\Commission\Show::class)->name('show')->middleware('permission:show commission');
+    });
+
+    // Lifting
+    Route::prefix('lifting')->name('lifting.')->group(function (){
+        Route::get('/all', \App\Livewire\Services\Lifting\Index::class)->name('index')->middleware('permission:view lifting');
+        Route::get('/create', \App\Livewire\Services\Lifting\Create::class)->name('create')->middleware('permission:create lifting');
+        Route::get('/{lifting}/edit', \App\Livewire\Services\Lifting\Edit::class)->name('edit')->middleware('permission:edit lifting');
+        Route::get('/{lifting}/details', \App\Livewire\Services\Lifting\Show::class)->name('show')->middleware('permission:show lifting');
+    });
+
     // Role
     Route::prefix('role')->name('role.')->group(function (){
         Route::get('/all', App\Livewire\Authorization\Role\Index::class)->name('index')->middleware('permission:view role');

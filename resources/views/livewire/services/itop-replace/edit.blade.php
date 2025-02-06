@@ -53,7 +53,11 @@
             <x-form.text-input wire:model.blur="form.balance" error="form.balance" placeholder="Enter balance"/>
 
             <x-form.label>Reason</x-form.label>
-            <x-form.text-input wire:model.blur="form.reason" error="form.reason" placeholder="Enter reason"/>
+            <x-form.select-input-sm wire:model.blur="form.reason" error="form.reason">
+                <option selected="" value="">Select Reason</option>
+                <option value="lost">Lost</option>
+                <option value="damaged">Damaged</option>
+            </x-form.select-input-sm>
 
             <x-form.label>Remarks</x-form.label>
             <x-form.text-input wire:model.blur="form.remarks" error="form.remarks" placeholder="Enter remarks"/>

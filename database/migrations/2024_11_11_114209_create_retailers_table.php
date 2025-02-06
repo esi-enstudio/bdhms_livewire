@@ -19,11 +19,11 @@ return new class extends Migration
             $table->foreignIdFor(House::class);
             $table->foreignIdFor(Rso::class)->nullable();
             $table->foreignIdFor(User::class)->nullable();
-            $table->string('code')->unique();
+            $table->string('code')->unique()->index();
             $table->string('name');
             $table->string('owner_name')->nullable();
             $table->string('owner_number')->nullable();
-            $table->string('itop_number')->unique();
+            $table->string('itop_number')->unique()->index();
             $table->string('type')->default('telecom');
             $table->enum('enabled', ['Y','N'])->default('Y');
             $table->enum('sso', ['Y','N'])->default('Y');

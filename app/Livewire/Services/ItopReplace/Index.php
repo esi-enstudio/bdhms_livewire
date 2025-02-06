@@ -7,23 +7,14 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
-class Index extends Component implements HasMiddleware
+class Index extends Component
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware('permission: view replace', only: ['render'])
-        ];
-    }
-
     // Pagination Traits
     use WithPagination, WithoutUrlPagination;
 
