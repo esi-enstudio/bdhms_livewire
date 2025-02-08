@@ -40,10 +40,9 @@ class Index extends Component
         session()->flash('message','Record deleted successfully!');
     }
 
-    // Delete ALL
-
     /**
      * @throws AuthorizationException
+     * Delete ALL
      */
     public function deleteAll(): void {
 

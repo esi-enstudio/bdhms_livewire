@@ -51,14 +51,13 @@ class Create extends Component
 
     public function render(): Factory|View|Application
     {
-        $retailers = null;
+        $retailers = '';
 
         if ( Auth::user()->hasRole('super admin') ) {
             $retailers = Retailer::where('enabled', 'Y')->get();
         }elseif (Auth::user()->hasRole('rso')){
             $rsoID = Rso::firstWhere( 'user_id', Auth::id() )->id;
             $retailers = Retailer::where( [ [ 'enabled', 'Y' ], [ 'rso_id', $rsoID ] ] )->get();
-
         }
 
         return view('livewire.services.itop-replace.create', [

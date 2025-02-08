@@ -17,9 +17,9 @@ return new class extends Migration
     {
         Schema::create('commissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor( House::class);
-            $table->foreignIdFor( User::class, 'manager')->nullable();
-            $table->foreignIdFor( User::class, 'supervisor')->nullable();
+            $table->foreignIdFor( House::class)->nullable();
+            $table->foreignIdFor( User::class, 'user_manager_id')->nullable();
+            $table->foreignIdFor( User::class, 'user_supervisor_id')->nullable();
             $table->foreignIdFor( Rso::class)->nullable();
             $table->foreignIdFor( Retailer::class)->nullable();
             $table->string('for');

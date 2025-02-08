@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static where( string $string, string $string1 )
  * @method static create(array $attr)
  * @method static firstWhere()
+ * @method static select(string $string, string $string1, string $string2)
  * @property mixed $id
  */
 class House extends Model

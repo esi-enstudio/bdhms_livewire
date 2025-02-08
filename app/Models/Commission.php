@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
  * @method static search( mixed $search )
  * @method static create( array $attributes )
  * @method static where( array[] $array )
+ * @method static truncate()
+ * @method static count()
  * @property mixed $month
  * @property mixed $receive_date
  */
@@ -22,7 +24,7 @@ class Commission extends Model
     use HasFactory, Searchable;
 
     protected $guarded = [];
-    protected $with = ['ddHouse','user','rso','retailer','manager','supervisor'];
+    protected $with = ['house','user','rso','retailer'];
     protected $appends = ['month_name','receive','c_type','c_status','taka'];
 
     protected array $searchable = [
@@ -30,8 +32,8 @@ class Commission extends Model
         'name',
         'type',
         'amount',
-        'ddHouse.name',
-        'ddHouse.code',
+        'house.name',
+        'house.code',
     ];
 
     // Accessor for formatted_date
@@ -72,24 +74,14 @@ class Commission extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function ddHouse(): BelongsTo
+    public function house(): BelongsTo
     {
-        return $this->belongsTo(DdHouse::class);
-    }
-
-    public function zm(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'zm');
+        return $this->belongsTo(House::class);
     }
 
     public function manager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'manager');
-    }
-
-    public function supervisor(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'supervisor');
     }
 
     public function rso(): BelongsTo

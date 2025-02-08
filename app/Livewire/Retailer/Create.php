@@ -56,8 +56,6 @@ class Create extends Component
         return $this->redirectRoute('retailer.index', navigate: true);
     }
 
-
-
     public function render(): Factory|View|Application
     {
         $availableUsers = Retailer::whereNotNull('user_id')->pluck('user_id');

@@ -6,7 +6,6 @@
         cancelBtnText="Cancel"
         :action=" (object) [
                 'btnType' => 'button',
-//                'url' => route('houses.edit', 5), // required if button type is 'link'
                 'btnText' => 'Create Retailer',
             ]"
         submitMethod="store"

@@ -29,6 +29,8 @@ use Illuminate\Notifications\Notifiable;
   * @method static count()
   * @method static whereHas(string $string, \Closure $param)
   * @method static whereNotIn(string $string, $userId)
+  * @method static role(string $string)
+  * @method static select()
   * @property mixed $created_at
   * @property mixed $updated_at
   * @property mixed $email_verified_at
