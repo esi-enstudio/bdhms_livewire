@@ -5,6 +5,8 @@ namespace App\Livewire\Services\Commission;
 use App\Livewire\Forms\CommissionForm;
 use App\Models\Commission;
 use App\Models\House;
+use App\Models\Retailer;
+use App\Models\Rso;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,16 +17,7 @@ use Livewire\Component;
 class Create extends Component
 {
     public CommissionForm $form;
-    public bool $isHouse = false;
-    public $houses;
-    public bool $isManager = false;
-    public $managers;
-    public bool $isSupervisor = false;
-    public $supervisors;
-    public bool $isRso = false;
-    public $rsos;
-    public bool $isRetailer = false;
-    public $retailers;
+    public bool $isManagerDisable = false;
 
     /**
      * @throws ValidationException
@@ -32,26 +25,12 @@ class Create extends Component
     public function updated($fields, $value): void {
         $this->validateOnly($fields);
 
-        if ($value == 'DD'){
-            $this->reset('isManager','isSupervisor','isRso','isRetailer');
-            $this->isHouse = true;
-            $this->houses = House::select('id','code','name')->where('status','active')->get();
-        }elseif ($value == 'Manager'){
-            $this->reset('isHouse','isSupervisor','isRso','isRetailer');
-            $this->isManager = true;
-            $this->managers = User::select('id','name','phone')->role('manager')->get();
-        }elseif ($value == 'Supervisor'){
-            $this->reset('isHouse','isManager','isRso','isRetailer');
-            $this->isSupervisor = true;
-            $this->supervisors = User::select('id','name','phone')->role('supervisor')->get();
-        }elseif ($value == 'Rso'){
-            $this->reset('isHouse','isManager','isSupervisor','isRetailer');
-            $this->isRso = true;
-            $this->rsos = User::select('id','name','phone')->role('rso')->get();
-        }elseif ($value == 'Retailer'){
-            $this->reset('isHouse','isManager','isSupervisor','isRso');
-            $this->isRetailer = true;
-            $this->retailers = User::select('id','name','phone')->role('retailer')->get();
+        // Reset field when house change
+        if ($fields === 'form.house_id') {
+            $this->form->user_manager_id = null;
+            $this->form->user_supervisor_id = null;
+            $this->form->rso_id = null;
+            $this->form->retailer_id = null;
         }
     }
 
@@ -62,6 +41,8 @@ class Create extends Component
 
         // Validating fields
         $attr = $this->form->validate();
+
+        dd($attr);
 
         $attr['status'] = 'pending';
 
@@ -76,6 +57,30 @@ class Create extends Component
 
 
     public function render(): Factory|View|Application {
-        return view('livewire.services.commission.create')->title('Add New');
+
+        $houses = House::select('id','code','name')->where('status','active')->get();
+        $managers = User::select('id','name','phone')
+                ->role('manager')
+                ->whereHas('houses', fn($query) => $query->where('houses.id', $this->form->house_id))
+                ->get();
+        $supervisors = User::select('id','name','phone')
+                ->role('supervisor')
+                ->whereHas('houses', fn($query) => $query->where('houses.id', $this->form->house_id))
+                ->get();
+        $rsos = Rso::select('id','rso_code','itop_number')
+                ->where('house_id', $this->form->house_id)
+                ->get();
+        $retailers = Retailer::select('id','code','itop_number')
+                ->where('house_id', $this->form->house_id)
+                ->get();
+
+
+        return view('livewire.services.commission.create', [
+                'houses' => $houses,
+                'managers' => $managers,
+                'supervisors' => $supervisors,
+                'rsos' => $rsos,
+                'retailers' => $retailers,
+        ])->title('Add New');
     }
 }

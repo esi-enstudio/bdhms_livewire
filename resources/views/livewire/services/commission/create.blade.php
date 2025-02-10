@@ -1,5 +1,6 @@
 <div>
     <x-validation-errors/>
+
     <x-form
             heading="Create New Commission"
             subheading="Fill in the details below to create new commission."
@@ -12,6 +13,14 @@
             submitMethod="store"
     >
         <x-form.section>
+            <x-form.label>House</x-form.label>
+            <x-form.select-input-sm wire:model.live="form.house_id" error="form.house_id">
+                <option selected="" value="">Select House</option>
+                @foreach($houses as $house)
+                    <option value="{{ $house->id }}">{{ $house->code.' - '.$house->name }}</option>
+                @endforeach
+            </x-form.select-input-sm>
+
             <x-form.label>Commission For</x-form.label>
             <x-form.select-input-sm wire:model.live="form.for" error="form.for">
                 <option selected="" value="">Commission For</option>
@@ -22,17 +31,6 @@
                 <option value="Retailer">Retailer</option>
             </x-form.select-input-sm>
 
-            @if($isHouse)
-            <x-form.label>House</x-form.label>
-            <x-form.select-input-sm wire:model.blur="form.house_id" error="form.house_id">
-                <option selected="" value="">Select House</option>
-                @foreach($houses as $house)
-                    <option value="{{ $house->id }}">{{ $house->code.' - '.$house->name }}</option>
-                @endforeach
-            </x-form.select-input-sm>
-            @endif
-
-            @if($isManager)
             <x-form.label>Manager</x-form.label>
             <x-form.select-input-sm wire:model.blur="form.user_manager_id" error="form.user_manager_id">
                 <option selected="" value="">Select Manager</option>
@@ -40,9 +38,7 @@
                     <option value="{{ $manager->id }}">{{ $manager->phone.' - '.$manager->name }}</option>
                 @endforeach
             </x-form.select-input-sm>
-            @endif
 
-            @if($isSupervisor)
             <x-form.label>Supervisor</x-form.label>
             <x-form.select-input-sm wire:model.blur="form.user_supervisor_id" error="form.user_supervisor_id">
                 <option selected="" value="">Select Supervisor</option>
@@ -50,27 +46,22 @@
                     <option value="{{ $supervisor->id }}">{{ $supervisor->phone.' - '.$supervisor->name }}</option>
                 @endforeach
             </x-form.select-input-sm>
-            @endif
 
-            @if($isRso)
             <x-form.label>Rso</x-form.label>
             <x-form.select-input-sm wire:model.blur="form.rso_id" error="form.rso_id">
                 <option selected="" value="">Select Rso</option>
                 @foreach($rsos as $rso)
-                    <option value="{{ $rso->id }}">{{ $rso->phone.' - '.$rso->name }}</option>
+                    <option value="{{ $rso->id }}">{{ $rso->rso_code.' - '.$rso->itop_number }}</option>
                 @endforeach
             </x-form.select-input-sm>
-            @endif
 
-            @if($isRetailer)
             <x-form.label>Retailer</x-form.label>
             <x-form.select-input-sm wire:model.blur="form.retailer_id" error="form.retailer_id">
                 <option selected="" value="">Select Retailer</option>
                 @foreach($retailers as $retailer)
-                    <option value="{{ $retailer->id }}">{{ $retailer->phone.' - '.$retailer->name }}</option>
+                    <option value="{{ $retailer->id }}">{{ $retailer->code.' - '.$retailer->itop_number }}</option>
                 @endforeach
             </x-form.select-input-sm>
-            @endif
 
             <x-form.label>Type</x-form.label>
             <x-form.select-input-sm wire:model.live="form.type" error="form.type">

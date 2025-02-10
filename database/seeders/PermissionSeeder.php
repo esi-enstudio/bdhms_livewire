@@ -90,17 +90,17 @@ class PermissionSeeder extends Seeder
         $manager = Role::create(['name' => 'manager']);
         $manager->givePermissionTo(['view rso', 'create rso', 'edit rso', 'delete rso', 'view retailer', 'create retailer', 'edit retailer', 'delete retailer','view commission', 'create commission', 'edit commission', 'delete commission',]);
         User::findOrFail(4)->assignRole('manager');
+        User::findOrFail(5)->assignRole('manager');
+        User::findOrFail(6)->assignRole('manager');
 
         $supervisor = Role::create(['name' => 'supervisor']);
         $supervisor->givePermissionTo(['view rso', 'create rso', 'edit rso', 'view retailer', 'create retailer', 'edit retailer', 'view commission', 'create commission', 'edit commission',]);
-        User::findOrFail(5)->assignRole('supervisor');
-        User::findOrFail(6)->assignRole('supervisor');
         User::findOrFail(7)->assignRole('supervisor');
+        User::findOrFail(8)->assignRole('supervisor');
+        User::findOrFail(9)->assignRole('supervisor');
 
         $rso = Role::create(['name' => 'rso']);
         $rso->givePermissionTo(['view rso', 'edit rso', 'view retailer', 'edit retailer', 'view commission','view replace', 'create replace', 'edit replace',]);
-        User::findOrFail(8)->assignRole('rso');
-        User::findOrFail(9)->assignRole('rso');
         User::findOrFail(10)->assignRole('rso');
         User::findOrFail(11)->assignRole('rso');
         User::findOrFail(12)->assignRole('rso');
@@ -125,5 +125,37 @@ class PermissionSeeder extends Seeder
         User::findOrFail(31)->assignRole('rso');
         User::findOrFail(32)->assignRole('rso');
         User::findOrFail(33)->assignRole('rso');
+        User::findOrFail(34)->assignRole('rso');
+        User::findOrFail(35)->assignRole('rso');
+
+        $rso = Role::create(['name' => 'retailer']);
+        $rso->givePermissionTo(['view retailer', 'view replace']);
+        User::findOrFail(36)->assignRole('retailer');
+        User::findOrFail(37)->assignRole('retailer');
+        User::findOrFail(38)->assignRole('retailer');
+        User::findOrFail(39)->assignRole('retailer');
+        User::findOrFail(40)->assignRole('retailer');
+        User::findOrFail(41)->assignRole('retailer');
+        User::findOrFail(42)->assignRole('retailer');
+        User::findOrFail(43)->assignRole('retailer');
+        User::findOrFail(44)->assignRole('retailer');
+        User::findOrFail(45)->assignRole('retailer');
+        User::findOrFail(46)->assignRole('retailer');
+        User::findOrFail(47)->assignRole('retailer');
+        User::findOrFail(48)->assignRole('retailer');
+        User::findOrFail(49)->assignRole('retailer');
+        User::findOrFail(50)->assignRole('retailer');
+        User::findOrFail(51)->assignRole('retailer');
+        User::findOrFail(52)->assignRole('retailer');
+        User::findOrFail(53)->assignRole('retailer');
+        User::findOrFail(54)->assignRole('retailer');
+        User::findOrFail(55)->assignRole('retailer');
+        User::findOrFail(56)->assignRole('retailer');
+        User::findOrFail(57)->assignRole('retailer');
+        User::findOrFail(58)->assignRole('retailer');
+        User::findOrFail(59)->assignRole('retailer');
+        User::findOrFail(60)->assignRole('retailer');
+        User::findOrFail(61)->assignRole('retailer');
+        User::findOrFail(62)->assignRole('retailer');
     }
 }

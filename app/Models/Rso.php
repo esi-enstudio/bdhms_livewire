@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static count()
  * @method static whereIn(string $string, $selectedUsers)
  * @method static findOrFail($id)
+ * @method static select(string $string, string $string1, string $string2)
  * @property mixed $documents
  * @property mixed $user
  * @property mixed $user_id

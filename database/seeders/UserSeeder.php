@@ -21,7 +21,9 @@ class UserSeeder extends Seeder
 
             ['name' => 'Mdo', 'phone' => '01911000002', 'email' => 'mdo@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
 
-            ['name' => 'Manager', 'phone' => '01911000003', 'email' => 'manager@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Manager 1', 'phone' => '01911000003', 'email' => 'manager1@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Manager 2', 'phone' => '01911100003', 'email' => 'manager2@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Manager 3', 'phone' => '01911110003', 'email' => 'manager3@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
 
             ['name' => 'Supervisor 1', 'phone' => '01911000004', 'email' => 'supervisor1@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Supervisor 2', 'phone' => '01911000005', 'email' => 'supervisor2@gmail.com', 'status' => 'active', 'password' => Hash::make('password'), 'remember_token' => Str::random(10), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()],
